@@ -2,13 +2,21 @@
 
 A student-first authorship-verification reference workspace with a detailed five-part production architecture blueprint.
 
+## The flipped question
+
+AuthWords does not ask "Did an AI write this?" It asks "Did this specific student write this?" The workspace carries the full argument for that flip from the original proposal:
+
+- **`/?view=why-not-detection`** lays out the three arguments for why detection perpetually lags: proliferation, customization, and the arms race. It also states plainly that the customization argument cuts both ways, which is why the production design treats style as context and supervised, attributable writing as the evidence.
+- **`/?view=flip`** restores the pedagogical innovation: students engineer the prompt that produces an A-level essay and are graded on the prompt. The Euthyphro example, its D-to-A rubric, learning outcomes, and an implementation guide are included. The prompt and its iterations are the authorship evidence.
+- **`/demo`** ends with a scoreboard of all four scenarios. With the default references, Mary Shelley scores at least as close to Austen as Austen's own held-out chapter. That is the lesson, not a bug, and a unit test pins it.
+
 ## Evaluate without signing in or uploading
 
 Open **`/demo`** (also linked as **Public demo** in the sidebar and **Try the public demo** on the overview). An Austen holdout result is already visible on first load—no account, workspace cookie, database seed, or uploaded document is required.
 
 The versioned fixture in `src/data/public-demo/corpus.json` includes three credited public-domain Jane Austen reference passages, an Emma holdout, an 1818 Mary Shelley excerpt, one explicitly labeled AI-generated fixture, and a short-sample abstention case. It is roughly 30 KB, downloaded locally with the app, and never fetched from a third-party archive at runtime. Source URLs, editions, excerpt hashes, rights scope, and synthetic-generation provenance are included. The full manifest is downloadable at `/api/demo/corpus`.
 
-The demo calculates a deterministic six-feature **style index**, not an authorship probability or AI verdict. Read-only `/api/demo/compare` accepts only allowlisted scenario/reference IDs. Changing selected baseline texts recomputes the result; a short candidate or a one-excerpt baseline produces no score. Published source labels are not fed into the calculation. No result mints a credential.
+The demo calculates a deterministic six-feature **style index**, not an authorship probability or AI verdict. The same tokenizer in `src/lib/text-features.ts` powers both the demo and the browser-side workspace metrics. Read-only `/api/demo/compare` accepts only allowlisted scenario/reference IDs. Changing selected baseline texts recomputes the result; a short candidate or a one-excerpt baseline produces no score. Published source labels are not fed into the calculation. No result mints a credential.
 
 Documented context includes English source language, birthplace, lifespan, and publication period. ESL status and proficiency remain explicitly unknown. Biographical/context fields are display-only and never adjust the score; this tiny historical collection cannot validate demographic fairness.
 
@@ -20,7 +28,7 @@ See `src/data/public-demo/README.md` for rights, source credits, limitations, an
 - PostgreSQL persistence via Drizzle for isolated demo sessions, source preferences, consent, submissions, review requests, and credentials.
 - Browser-local extraction of coarse writing metrics. The submission API rejects raw-text fields; it accepts a strict, bounded JSON schema. Text is cleared from application state, but forensic browser-memory erasure is not guaranteed.
 - Explicitly illustrative consistency scoring, including abstention for short and prompt-engineering samples. There is no trained authorship classifier in this reference app.
-- Real Ed25519 signatures on **synthetic demo claims**, public JWKS, online revocation checks, and minimal public verification pages. These do not certify a real grade, student identity, or actual authorship.
+- Real Ed25519 signatures on **synthetic demo claims**, public JWKS, online revocation checks, and minimal public verification pages. The signed claim is authorship only; a grade is a separate, student-controlled disclosure and is never embedded. These do not certify a real grade, student identity, or actual authorship.
 - A searchable five-section blueprint with Markdown export. Open `/?view=blueprint` or download `/api/blueprint`.
 
 ## Runtime versus proposed architecture
@@ -31,13 +39,17 @@ LTI integrations, university identity, a trained/calibrated ensemble, institutio
 
 ## Run and validate
 
-Set `DATABASE_URL` in the server environment. Do not expose it through public-prefixed variables.
+Set `DATABASE_URL` in the server environment. Do not expose it through public-prefixed variables. The database pool is created lazily, so `npm run build`, `npm run lint`, and `npm test` work without one.
 
-1. Install dependencies with `npm install`.
-2. Apply the schema with `npx drizzle-kit push` against the configured local PostgreSQL database.
+1. Install dependencies with `npm ci`.
+2. Apply the schema with `npx drizzle-kit push`; the Drizzle config reads `DATABASE_URL`.
 3. Use `npm run dev` for local development.
-4. Validate with `npx next typegen`, `npm exec tsc -- --noEmit --pretty false`, and `npm run build`.
+4. Validate with `npm run lint`, `npm run typecheck`, `npm test`, and `npm run build`.
 5. In the managed preview, use the platform build/start action for production startup and `/api/health` verification.
+
+`npm test` runs the unit tests in `tests/` with the Node test runner. They cover the public-demo index, the shared tokenizer, and the browser-side metrics, and they pin the demo's scenario scores so a fixture refresh cannot silently change its story. `.github/workflows/ci.yml` runs lint, typecheck, unit tests, and the build on every push, then the two smoke suites against a PostgreSQL service.
+
+Abandoned demo workspaces are deleted whenever a new visitor arrives, using the same seven-day lifetime as the session cookie.
 
 The workspace initializes synthetic records on its first `/api/workspace` request. The HttpOnly, SameSite demo-session cookie isolates each visitor's data. It is not institutional authentication.
 
@@ -45,7 +57,7 @@ The workspace initializes synthetic records on its first `/api/workspace` reques
 
 With the application running, install Chromium and system dependencies using `npx playwright install --with-deps chromium`, then run:
 
-`node scripts/smoke.mjs`
+`npm run smoke` (or `node scripts/smoke.mjs` and `node scripts/public-demo-smoke.mjs` separately)
 
 Use `TEST_BASE_URL` to target another instance. Tests cover session persistence/isolation, origin checking, raw-text rejection, consent enforcement, source preferences, prompt-specific abstention, review requests, credential minting/idempotency, public metadata minimization, independent signature verification, payload tampering, revocation, navigation, table filtering, blueprint search/export, browser-only metric extraction, and mobile layouts. API test workspaces are deleted afterward.
 
@@ -54,6 +66,8 @@ Use `TEST_BASE_URL` to target another instance. Tests cover session persistence/
 | Route | Purpose |
 | --- | --- |
 | `/` | Interactive workspace |
+| `/?view=why-not-detection` | The case against detection and for the flipped question |
+| `/?view=flip` | The prompt-engineering assignment with the Euthyphro example |
 | `/?view=blueprint` | Five-part technical submission |
 | `/api/blueprint` | Downloadable Markdown blueprint |
 | `/api/workspace` | GET workspace; PATCH consent/source preferences; DELETE/reset session |

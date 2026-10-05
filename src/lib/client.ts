@@ -1,6 +1,8 @@
 import type { Submission } from "@/lib/demo-data";
-export type View = "overview" | "submissions" | "profile" | "credentials" | "blueprint" | "how-it-works" | "settings";
-export const viewNames: Record<View, string> = { overview: "Overview", submissions: "My submissions", profile: "Writing profile", credentials: "Credentials", blueprint: "System blueprint", "how-it-works": "How it works", settings: "Privacy & settings" };
+import { mean, populationDeviation, sentenceLengths, words } from "@/lib/text-features";
+export type View = "overview" | "submissions" | "profile" | "credentials" | "blueprint" | "how-it-works" | "why-not-detection" | "flip" | "settings";
+export const viewNames: Record<View, string> = { overview: "Overview", submissions: "My submissions", profile: "Writing profile", credentials: "Credentials", blueprint: "System blueprint", "how-it-works": "How it works", "why-not-detection": "Why not detection?", flip: "Flip the assignment", settings: "Privacy & settings" };
+export const viewHref = (view: View) => view === "overview" ? "/" : `/?view=${view}`;
 export async function api<T>(url: string, method = "GET", body?: unknown): Promise<T> {
   const response = await fetch(url, { method, headers: body === undefined ? undefined : { "Content-Type": "application/json" }, body: body === undefined ? undefined : JSON.stringify(body), cache: "no-store" });
   const data = await response.json();
@@ -17,11 +19,10 @@ export function exportSubmissions(rows: Submission[]) {
   downloadFile(csv, "authwords-demo-submissions.csv", "text/csv;charset=utf-8");
 }
 export function formatDate(value: string, long = false) { return new Date(value).toLocaleDateString("en-US", { month: long ? "long" : "short", day: "numeric", ...(long ? { year: "numeric" as const } : {}) }); }
+// Coarse, browser-only metrics. Shares its tokenizer with the public demo so both measure alike.
 export function deriveMetrics(text: string) {
-  const words = text.toLowerCase().match(/[\p{L}\p{N}'’\-]+/gu) || [];
-  const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(Boolean);
-  const lengths = sentences.map(s => (s.match(/[\p{L}\p{N}'’\-]+/gu) || []).length);
-  const mean = lengths.reduce((a, b) => a + b, 0) / Math.max(lengths.length, 1);
-  const variance = lengths.reduce((sum, length) => sum + (length - mean) ** 2, 0) / Math.max(lengths.length, 1);
-  return { wordCount: words.length, avgSentenceLength: Math.max(1, mean), lexicalDiversity: new Set(words).size / Math.max(words.length, 1), punctuationRate: (text.match(/[,;:!?—.]/g) || []).length / Math.max(words.length, 1), sentenceVariation: Math.sqrt(variance) / Math.max(mean, 1) };
+  const wordList = words(text);
+  const lengths = sentenceLengths(text);
+  const average = mean(lengths);
+  return { wordCount: wordList.length, avgSentenceLength: Math.max(1, average), lexicalDiversity: new Set(wordList).size / Math.max(wordList.length, 1), punctuationRate: (text.match(/[,;:!?—.]/g) || []).length / Math.max(wordList.length, 1), sentenceVariation: populationDeviation(lengths) / Math.max(average, 1) };
 }

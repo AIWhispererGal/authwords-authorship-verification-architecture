@@ -19,7 +19,7 @@ export async function PATCH(request: Request) {
     if (!workspace) return NextResponse.json({ error: "Open your workspace first." }, { status: 401 });
     const parsed = settings.safeParse(await readSmallJson(request));
     if (!parsed.success) return NextResponse.json({ error: "Invalid preferences." }, { status: 400 });
-    const [updated] = await db.update(workspaces).set({ ...parsed.data, consentUpdatedAt: new Date() }).where(eq(workspaces.id, workspace.id)).returning();
+    const [updated] = await db.update(workspaces).set({ ...parsed.data, ...(parsed.data.consent !== undefined && parsed.data.consent !== workspace.consent ? { consentUpdatedAt: new Date() } : {}) }).where(eq(workspaces.id, workspace.id)).returning();
     return NextResponse.json(await workspaceData(updated));
   } catch { return NextResponse.json({ error: "Preferences could not be saved." }, { status: 400 }); }
 }

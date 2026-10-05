@@ -8,7 +8,7 @@ export const workspaces = pgTable("aw_workspaces", {
   sources: jsonb("sources").$type<string[]>().notNull().default(["discussions", "timed", "drafts", "reviews"]),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   consentUpdatedAt: timestamp("consent_updated_at", { withTimezone: true }).notNull().defaultNow(),
-});
+}, (table) => [index("aw_workspaces_created_idx").on(table.createdAt)]);
 
 export const submissions = pgTable("aw_submissions", {
   id: uuid("id").primaryKey(),

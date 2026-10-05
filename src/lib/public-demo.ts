@@ -1,4 +1,5 @@
 import fixture from "@/data/public-demo/corpus.json";
+import { mean, populationDeviation, sentenceLengths, textWindow, wordCount, words } from "@/lib/text-features";
 
 export interface PublicExcerpt {
   id: string; authorId: string; title: string; year: number | null; edition: string; ebook: number | null;
@@ -47,33 +48,24 @@ export interface DemoComparison {
 }
 
 const functionVocabulary = new Set("the a an and or but if of to in on at by for from with as is was were be been being it its that this these those which who not so than".split(" "));
-function tokens(text: string) { return [...text.matchAll(/[\p{L}\p{N}]+(?:['’][\p{L}\p{N}]+)*/gu)]; }
-export function publicWordCount(text: string) { return tokens(text).length; }
-function textWindow(text: string, limit: number) {
-  const matches = tokens(text);
-  if (matches.length <= limit) return text;
-  const next = matches[limit];
-  return text.slice(0, next.index).trim();
-}
-const mean = (values: number[]) => values.reduce((sum, value) => sum + value, 0) / Math.max(values.length, 1);
+export const publicWordCount = wordCount;
 const round = (value: number) => Math.round(value * 1000) / 1000;
 
 // This function deliberately accepts text only: no author labels, biography, or AI flag.
 export function extractPublicFeatures(text: string): FeatureValues {
-  const words = tokens(text).map(match => match[0].toLowerCase().replaceAll("’", "'"));
-  const protectedText = text.replace(/\b(Mr|Mrs|Ms|Dr|Rev|St|Prof)\./gi, "$1\u2024");
-  const sentenceLengths = protectedText.split(/[.!?]+/).map(sentence => tokens(sentence).length).filter(length => length > 0);
-  const average = mean(sentenceLengths);
-  const deviation = Math.sqrt(mean(sentenceLengths.map(length => (length - average) ** 2)));
-  const windowSize = Math.min(50, words.length);
+  const wordList = words(text);
+  const lengths = sentenceLengths(text);
+  const average = mean(lengths);
+  const deviation = populationDeviation(lengths);
+  const windowSize = Math.min(50, wordList.length);
   const lexicalWindows: number[] = [];
-  for (let index = 0; index <= words.length - windowSize && windowSize > 0; index++) lexicalWindows.push(new Set(words.slice(index, index + windowSize)).size / windowSize);
+  for (let index = 0; index <= wordList.length - windowSize && windowSize > 0; index++) lexicalWindows.push(new Set(wordList.slice(index, index + windowSize)).size / windowSize);
   return {
     sentenceLength: average,
     sentenceRhythm: average ? deviation / average : 0,
-    wordLength: mean(words.map(word => (word.match(/\p{L}/gu) || []).length)),
-    functionWords: words.filter(word => functionVocabulary.has(word)).length / Math.max(words.length, 1) * 100,
-    punctuation: (text.match(/[,;:—–]|--/g) || []).length / Math.max(words.length, 1) * 100,
+    wordLength: mean(wordList.map(word => (word.match(/\p{L}/gu) || []).length)),
+    functionWords: wordList.filter(word => functionVocabulary.has(word)).length / Math.max(wordList.length, 1) * 100,
+    punctuation: (text.match(/[,;:—–]|--/g) || []).length / Math.max(wordList.length, 1) * 100,
     vocabulary: mean(lexicalWindows) * 100,
   };
 }

@@ -63,5 +63,5 @@ export function RadarChart({ large = false }: { large?: boolean }) {
 }
 
 export function CredentialMedallion({ compact = false }: { compact?: boolean }) {
-  return <div className={`credential-medallion ${compact ? "compact" : ""}`} aria-hidden="true"><div className="medallion-outline"><div className="medallion-inner"><span>A</span><span className="medallion-check"><Check size={compact ? 14 : 19} strokeWidth={2.5}/></span></div></div></div>;
+  return <div className={`credential-medallion ${compact ? "compact" : ""}`} aria-hidden="true"><div className="medallion-outline"><div className="medallion-inner"><span>✳</span><span className="medallion-check"><Check size={compact ? 14 : 19} strokeWidth={2.5}/></span></div></div></div>;
 }
