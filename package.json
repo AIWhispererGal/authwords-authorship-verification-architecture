@@ -1,18 +1,18 @@
 {
-  "name": "nextjs-postgresql-template",
+  "name": "authwords",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "smoke": "node scripts/smoke.mjs && node scripts/public-demo-smoke.mjs",
+    "format:css": "prettier --write \"src/**/*.css\""
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",
-    "@playwright/test": "^1.63.0",
-    "baseline-browser-mapping": "^2.11.27",
-    "dotenv": "17.3.1",
     "drizzle-orm": "0.45.2",
     "jose": "^6.2.12",
     "lucide-react": "^1.52.0",
@@ -23,16 +23,21 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "4.1.17",
     "@types/node": "22.19.15",
     "@types/pg": "8.18.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
+    "baseline-browser-mapping": "^2.11.27",
     "drizzle-kit": "0.31.10",
     "eslint": "9.39.4",
     "eslint-config-next": "^16.3.8",
     "postcss": "^8.5.28",
+    "prettier": "^3.6.2",
     "tailwindcss": "4.1.17",
-    "typescript": "5.9.3"
+    "tsx": "^4.19.2",
+    "typescript": "5.9.3",
+    "wait-on": "^9.5.1"
   }
 }

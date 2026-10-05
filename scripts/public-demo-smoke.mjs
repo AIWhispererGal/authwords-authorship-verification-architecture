@@ -52,7 +52,7 @@ try {
   assert.equal((await http.storageState()).cookies.length, 0, "the public API must remain cookieless");
   console.log("PASS: local hashes, attribution, split integrity, anonymous APIs, deterministic real metrics, baseline recomputation, abstention, and strict ID-only boundaries.");
 
-  browser = await chromium.launch({ headless: true, args: ["--no-sandbox"] });
+  browser = await chromium.launch({ headless: true, args: ["--no-sandbox"], executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || undefined });
   const page = await browser.newPage({ viewport: { width: 1440, height: 1050 } });
   const errors = [], requests = [];
   page.on("pageerror", error => errors.push(error.message));
@@ -73,6 +73,10 @@ try {
   assert.match(page.url(), /sample=ai-fixture/);
   await page.getByRole("button", { name: "Inspect the signals" }).click();
   await expect(page.locator("#pd-feature-table tbody tr")).toHaveCount(6);
+  await expect(page.locator(".pd-score-tile")).toHaveCount(4);
+  await expect(page.locator(".pd-score-tile.active .eyebrow")).toHaveText("AI FIXTURE");
+  await expect(page.locator(".pd-score-tile").nth(1).locator("strong")).toHaveText(String(reports["other-human"].score));
+  await expect(page.getByText(/scores at least as close|edges out Shelley/)).toBeVisible();
   await page.getByRole("button", { name: "Mary Shelley", exact: true }).click();
   await expect(page.getByText("London, England", { exact: true })).toBeVisible();
   await expect(page.getByText("Not documented", { exact: true })).toBeVisible();

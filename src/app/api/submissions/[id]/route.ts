@@ -11,5 +11,6 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   const own = await ownSubmission(workspace.id, id);
   if (!own) return NextResponse.json({ error: "Submission not found." }, { status: 404 });
   const [updated] = await db.update(submissions).set({ reviewRequested: true }).where(and(eq(submissions.id, id), eq(submissions.workspaceId, workspace.id))).returning();
+  if (!updated) return NextResponse.json({ error: "Submission not found." }, { status: 404 });
   return NextResponse.json({ reviewRequested: updated.reviewRequested, note: "Review request saved in this demo. No instructor notification was sent." });
 }

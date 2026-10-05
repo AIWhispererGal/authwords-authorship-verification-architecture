@@ -44,8 +44,9 @@ try {
   const jwks = await (await context.get("/api/credentials/jwks")).json();
   const { payload } = await jwtVerify(proof.token, createLocalJWKSet(jwks), { algorithms: ["EdDSA"], issuer: "urn:authwords:synthetic-demo", audience: "urn:authwords:public-demo-verifier" });
   assert.equal(payload.demo, true);
+  assert.equal(payload.grade, undefined, "credential must not carry a grade claim");
   const parts = proof.token.split(".");
-  parts[1] = Buffer.from(JSON.stringify({ ...payload, grade: "A+" })).toString("base64url");
+  parts[1] = Buffer.from(JSON.stringify({ ...payload, gradeDisclosed: true, grade: "A+" })).toString("base64url");
   await assert.rejects(jwtVerify(parts.join("."), createLocalJWKSet(jwks)), "tampering must fail signature verification");
   const foreignRevoke = await other.patch("/api/credentials", { data: { id: minted.id, revoked: true } });
   assert.equal(foreignRevoke.status(), 404);
@@ -64,7 +65,7 @@ try {
   assert.equal((await review.json()).reviewRequested, true);
   console.log("PASS: persistence, isolation, strict data schema, origin checks, consent, signing, tamper resistance, revocation, prompt abstention, review requests.");
 
-  browser = await chromium.launch({ headless: true, args: ["--no-sandbox"] });
+  browser = await chromium.launch({ headless: true, args: ["--no-sandbox"], executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || undefined });
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
@@ -87,6 +88,16 @@ try {
   const downloadEvent = page.waitForEvent("download");
   await page.getByRole("button", { name: "Export blueprint" }).click();
   assert.equal((await downloadEvent).suggestedFilename(), "authwords-production-blueprint.md");
+  await page.getByRole("link", { name: "Why not detection?" }).click();
+  await expect(page.getByRole("heading", { name: "Detection is a race you cannot win." })).toBeVisible();
+  await expect(page.getByText("The customization problem")).toBeVisible();
+  await page.getByRole("link", { name: "Flip the assignment" }).click();
+  await expect(page.getByRole("heading", { name: "Make the shortcut the lesson." })).toBeVisible();
+  await expect(page.locator(".prompt-pane")).toHaveCount(2);
+  await page.getByRole("button", { name: "Engineered", exact: true }).click();
+  await expect(page.locator(".prompt-pane")).toHaveCount(1);
+  await page.goto(`${baseURL}/?view=flip`, { waitUntil: "networkidle" });
+  await expect(page.getByRole("heading", { name: "Make the shortcut the lesson." })).toBeVisible();
   await page.getByRole("link", { name: "Overview", exact: true }).click();
   await page.getByRole("button", { name: "Verify new work" }).click();
   await page.getByRole("button", { name: "Use a sample" }).click();
@@ -107,7 +118,7 @@ try {
   await expect(page.getByRole("switch", { name: "Enable authorship verification" })).toHaveAttribute("aria-checked", "false");
   assert.deepEqual(errors, [], "no browser runtime errors");
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
-  console.log("PASS: navigation, filtering, accessible dialogs, blueprint search/export, browser-only extraction, persisted consent, zero desktop overflow.");
+  console.log("PASS: navigation, filtering, accessible dialogs, blueprint search/export, flipped-question views, deep links, browser-only extraction, persisted consent, zero desktop overflow.");
 
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true });
   await mobile.goto(baseURL, { waitUntil: "networkidle" });
@@ -118,7 +129,8 @@ try {
   await mobile.goto(baseURL, { waitUntil: "networkidle" });
   assert.equal(await mobile.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false, "dashboard must not expand the mobile visual viewport");
   await mobile.goto(`${baseURL}/verify/${initial.credentials[0].id}`, { waitUntil: "networkidle" });
-  await expect(mobile.getByRole("heading", { name: "Verified authorship · Grade A" })).toBeVisible();
+  await expect(mobile.getByRole("heading", { name: "Verified authorship", exact: true })).toBeVisible();
+  assert.ok(!(await mobile.content()).includes("Grade A"), "public page must not disclose a grade");
   assert.equal(await mobile.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false);
   console.log("PASS: mobile navigation, responsive profile, public credential verification.");
   console.log("ALL AUTHWORDS SMOKE TESTS PASSED");

@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { cookies } from "next/headers";
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, lt } from "drizzle-orm";
 import { db } from "@/db";
 import { workspaces, submissions, credentials } from "@/db/schema";
 import { makeSeedSubmissions, type WorkspaceData, type SubmissionStatus } from "@/lib/demo-data";
@@ -14,9 +14,18 @@ export async function currentWorkspace() {
   return workspace || null;
 }
 
+// Demo workspaces outlive their cookie otherwise; cascade-delete the abandoned ones
+// whenever a new visitor arrives so crawlers cannot grow the table without bound.
+export const workspaceLifetimeDays = 7;
+async function purgeStaleWorkspaces() {
+  const cutoff = new Date(Date.now() - workspaceLifetimeDays * 24 * 60 * 60 * 1000);
+  await db.delete(workspaces).where(lt(workspaces.createdAt, cutoff));
+}
+
 export async function initializeWorkspace() {
   const existing = await currentWorkspace();
   if (existing) return existing;
+  await purgeStaleWorkspaces().catch(() => undefined);
   const id = randomUUID();
   const rows = makeSeedSubmissions().map(s => ({ ...s, id: randomUUID(), workspaceId: id, submittedAt: new Date(s.submittedAt) }));
   const signed = await Promise.all(rows.filter(s => s.status === "Verified").slice(0, 18).map(async (s) => ({
@@ -28,7 +37,7 @@ export async function initializeWorkspace() {
     await tx.insert(credentials).values(signed);
     return created;
   });
-  (await cookies()).set("aw_workspace", id, { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 60 * 60 * 24 * 7, path: "/" });
+  (await cookies()).set("aw_workspace", id, { httpOnly: true, sameSite: "lax", secure: process.env.NODE_ENV === "production", maxAge: 60 * 60 * 24 * workspaceLifetimeDays, path: "/" });
   return workspace;
 }
 
