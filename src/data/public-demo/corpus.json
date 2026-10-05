@@ -1,0 +1,237 @@
+{
+  "version": "austen-public-v1",
+  "name": "The Austen collection",
+  "importedAt": "2026-10-05T04:45:44.740Z",
+  "purpose": "Small, reproducible product evaluation. Not an authorship benchmark, a student dataset, or fairness validation.",
+  "processing": "Public literary excerpts are intentionally bundled as readable text. This public-only fixture does not authorize storing or exporting private student text.",
+  "rightsScope": "The five historical source works are listed as public domain in the USA. Check local law before reuse elsewhere. No universal copyright clearance is claimed.",
+  "acknowledgement": "Source reference: Project Gutenberg. References are attribution, not branding, sponsorship, or endorsement. Headers, license boilerplate, and editorial content are not part of the excerpt texts.",
+  "sourcePolicyUrl": "https://www.gutenberg.org/policy/license.html",
+  "limits": [
+    "Only two historical English-language authors; not a representative demographic sample.",
+    "Three baseline passages from three books cannot estimate a calibrated posterior or prove authorship.",
+    "The Shelley comparison changes genre and narrative voice; this is a confound, not a clean accuracy benchmark.",
+    "Historical publication years are not a measured student learning trajectory.",
+    "A language model may have encountered these public books during training; this is not a contamination-free AI benchmark.",
+    "One synthetic output cannot establish AI-detection accuracy. Similarity can be high for another author or low for the same author."
+  ],
+  "authors": [
+    {
+      "id": "jane-austen",
+      "name": "Jane Austen",
+      "lifespan": "1775–1817",
+      "birthYear": 1775,
+      "region": "Steventon, Hampshire, England",
+      "regionMeaning": "Documented birthplace, not an inferred linguistic trait",
+      "language": "English",
+      "languageMeaning": "Language of the source texts, not an assessment of native-language status",
+      "eslStatus": null,
+      "proficiency": null,
+      "educationLevel": null,
+      "biographyUrl": "https://www.bbc.co.uk/history/historic_figures/austen_jane.shtml",
+      "languageSourceUrl": "https://www.gutenberg.org/ebooks/author/68",
+      "description": "English novelist. The baseline uses three separate books published in 1811, 1813, and 1814; Emma is held out."
+    },
+    {
+      "id": "mary-shelley",
+      "name": "Mary Shelley",
+      "lifespan": "1797–1851",
+      "birthYear": 1797,
+      "region": "London, England",
+      "regionMeaning": "Documented birthplace, not an inferred linguistic trait",
+      "language": "English",
+      "languageMeaning": "Language of the source text, not an assessment of native-language status",
+      "eslStatus": null,
+      "proficiency": null,
+      "educationLevel": null,
+      "biographyUrl": "https://poets.org/poet/mary-shelley",
+      "languageSourceUrl": "https://www.gutenberg.org/ebooks/41445",
+      "description": "English novelist. The 1818 edition of Frankenstein supplies a known other-author control with a different genre and narrative voice."
+    }
+  ],
+  "baselineIds": [
+    "austen-sense",
+    "austen-pride",
+    "austen-mansfield"
+  ],
+  "scenarios": [
+    {
+      "id": "same-author",
+      "sampleId": "austen-emma",
+      "label": "Same author",
+      "title": "A new chapter, the same author",
+      "summary": "Emma is held out of Austen’s baseline. See how a new work compares.",
+      "truth": "Published attribution: Jane Austen",
+      "contextFlags": [
+        "SMALL_REFERENCE_SET"
+      ]
+    },
+    {
+      "id": "other-human",
+      "sampleId": "shelley-frankenstein",
+      "label": "Other human",
+      "title": "Human writing, a different author",
+      "summary": "Mary Shelley is not Jane Austen. Different authorship is not the same as AI-generated.",
+      "truth": "Published attribution: Mary Shelley",
+      "contextFlags": [
+        "SMALL_REFERENCE_SET",
+        "GENRE_AND_VOICE_SHIFT"
+      ]
+    },
+    {
+      "id": "ai-fixture",
+      "sampleId": "synthetic-social-scene",
+      "label": "AI fixture",
+      "title": "A frozen, openly labeled AI sample",
+      "summary": "One original synthetic passage, not a proxy for every model or writing style.",
+      "truth": "Known AI-generated fixture; model identifier unavailable",
+      "contextFlags": [
+        "SMALL_REFERENCE_SET",
+        "MODERN_LANGUAGE_SHIFT",
+        "SINGLE_SYNTHETIC_EXAMPLE"
+      ]
+    },
+    {
+      "id": "too-short",
+      "sampleId": "austen-fragment",
+      "label": "Too short",
+      "title": "Sometimes the honest answer is less",
+      "summary": "Even a genuine Austen passage can be too short to support comparison.",
+      "truth": "Published attribution: Jane Austen; truncated holdout",
+      "contextFlags": [
+        "SHORT_SAMPLE",
+        "SMALL_REFERENCE_SET"
+      ]
+    }
+  ],
+  "excerpts": [
+    {
+      "id": "austen-sense",
+      "authorId": "jane-austen",
+      "title": "Sense and Sensibility",
+      "year": 1811,
+      "edition": "English text, chapter 1",
+      "ebook": 161,
+      "role": "baseline",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/161",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/161/pg161.txt",
+      "sourceNote": "Opening 3 paragraphs of the specified section. Only whitespace reflowed; spelling, punctuation, and emphasis markers retained. No introductory/editorial material included.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "The family of Dashwood had long been settled in Sussex. Their estate was large, and their residence was at Norland Park, in the centre of their property, where, for many generations, they had lived in so respectable a manner as to engage the general good opinion of their surrounding acquaintance. The late owner of this estate was a single man, who lived to a very advanced age, and who for many years of his life, had a constant companion and housekeeper in his sister. But her death, which happened ten years before his own, produced a great alteration in his home; for to supply her loss, he invited and received into his house the family of his nephew Mr. Henry Dashwood, the legal inheritor of the Norland estate, and the person to whom he intended to bequeath it. In the society of his nephew and niece, and their children, the old Gentleman’s days were comfortably spent. His attachment to them all increased. The constant attention of Mr. and Mrs. Henry Dashwood to his wishes, which proceeded not merely from interest, but from goodness of heart, gave him every degree of solid comfort which his age could receive; and the cheerfulness of the children added a relish to his existence.\n\nBy a former marriage, Mr. Henry Dashwood had one son: by his present lady, three daughters. The son, a steady respectable young man, was amply provided for by the fortune of his mother, which had been large, and half of which devolved on him on his coming of age. By his own marriage, likewise, which happened soon afterwards, he added to his wealth. To him therefore the succession to the Norland estate was not so really important as to his sisters; for their fortune, independent of what might arise to them from their father’s inheriting that property, could be but small. Their mother had nothing, and their father only seven thousand pounds in his own disposal; for the remaining moiety of his first wife’s fortune was also secured to her child, and he had only a life-interest in it.\n\nThe old gentleman died: his will was read, and like almost every other will, gave as much disappointment as pleasure. He was neither so unjust, nor so ungrateful, as to leave his estate from his nephew;—but he left it to him on such terms as destroyed half the value of the bequest. Mr. Dashwood had wished for it more for the sake of his wife and daughters than for himself or his son;—but to his son, and his son’s son, a child of four years old, it was secured, in such a way, as to leave to himself no power of providing for those who were most dear to him, and who most needed a provision by any charge on the estate, or by any sale of its valuable woods. The whole was tied up for the benefit of this child, who, in occasional visits with his father and mother at Norland, had so far gained on the affections of his uncle, by such attractions as are by no means unusual in children of two or three years old; an imperfect articulation, an earnest desire of having his own way, many cunning tricks, and a great deal of noise, as to outweigh all the value of all the attention which, for years, he had received from his niece and her daughters. He meant not to be unkind, however, and, as a mark of his affection for the three girls, he left them a thousand pounds a-piece.",
+      "wordCount": 598,
+      "sha256": "f889721d6e2c41f11e442fd283260d27076aaba4eb80d4208bd7506047b5e6a4",
+      "upstreamSha256": "22272ec4d4da2f50cda51edf34ab8486b325c4a99580120db565fb8917228a22"
+    },
+    {
+      "id": "austen-pride",
+      "authorId": "jane-austen",
+      "title": "Pride and Prejudice",
+      "year": 1813,
+      "edition": "English text, chapter I; text-only archive edition #42671, novel text only",
+      "ebook": 42671,
+      "role": "baseline",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/42671",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/42671/pg42671.txt",
+      "sourceNote": "Opening 16 paragraphs of the specified section. Only whitespace reflowed; spelling, punctuation, and emphasis markers retained. No introductory/editorial material included.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.\n\nHowever little known the feelings or views of such a man may be on his first entering a neighbourhood, this truth is so well fixed in the minds of the surrounding families, that he is considered as the rightful property of some one or other of their daughters.\n\n\"My dear Mr. Bennet,\" said his lady to him one day, \"have you heard that Netherfield Park is let at last?\"\n\nMr. Bennet replied that he had not.\n\n\"But it is,\" returned she; \"for Mrs. Long has just been here, and she told me all about it.\"\n\nMr. Bennet made no answer.\n\n\"Do not you want to know who has taken it?\" cried his wife impatiently.\n\n\"_You_ want to tell me, and I have no objection to hearing it.\"\n\nThis was invitation enough.\n\n\"Why, my dear, you must know, Mrs. Long says that Netherfield is taken by a young man of large fortune from the north of England; that he came down on Monday in a chaise and four to see the place, and was so much delighted with it that he agreed with Mr. Morris immediately; that he is to take possession before Michaelmas, and some of his servants are to be in the house by the end of next week.\"\n\n\"What is his name?\"\n\n\"Bingley.\"\n\n\"Is he married or single?\"\n\n\"Oh! single, my dear, to be sure! A single man of large fortune; four or five thousand a year. What a fine thing for our girls!\"\n\n\"How so? how can it affect them?\"\n\n\"My dear Mr. Bennet,\" replied his wife, \"how can you be so tiresome! You must know that I am thinking of his marrying one of them.\"",
+      "wordCount": 302,
+      "sha256": "ce5ddc0d3374ffaedbdbcc94a32cb14fdb7737222afdf98576b76a5d78d22896",
+      "upstreamSha256": "3d2d320092e4b501cd0075bbc4fccac2c322d925710a9df05172e9cef86b5863"
+    },
+    {
+      "id": "austen-mansfield",
+      "authorId": "jane-austen",
+      "title": "Mansfield Park",
+      "year": 1814,
+      "edition": "English text, chapter 1",
+      "ebook": 141,
+      "role": "baseline",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/141",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/141/pg141.txt",
+      "sourceNote": "Opening 3 paragraphs of the specified section. Only whitespace reflowed; spelling, punctuation, and emphasis markers retained. No introductory/editorial material included.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "About thirty years ago Miss Maria Ward, of Huntingdon, with only seven thousand pounds, had the good luck to captivate Sir Thomas Bertram, of Mansfield Park, in the county of Northampton, and to be thereby raised to the rank of a baronet’s lady, with all the comforts and consequences of an handsome house and large income. All Huntingdon exclaimed on the greatness of the match, and her uncle, the lawyer, himself, allowed her to be at least three thousand pounds short of any equitable claim to it. She had two sisters to be benefited by her elevation; and such of their acquaintance as thought Miss Ward and Miss Frances quite as handsome as Miss Maria, did not scruple to predict their marrying with almost equal advantage. But there certainly are not so many men of large fortune in the world as there are pretty women to deserve them. Miss Ward, at the end of half a dozen years, found herself obliged to be attached to the Rev. Mr. Norris, a friend of her brother-in-law, with scarcely any private fortune, and Miss Frances fared yet worse. Miss Ward’s match, indeed, when it came to the point, was not contemptible: Sir Thomas being happily able to give his friend an income in the living of Mansfield; and Mr. and Mrs. Norris began their career of conjugal felicity with very little less than a thousand a year. But Miss Frances married, in the common phrase, to disoblige her family, and by fixing on a lieutenant of marines, without education, fortune, or connexions, did it very thoroughly. She could hardly have made a more untoward choice. Sir Thomas Bertram had interest, which, from principle as well as pride—from a general wish of doing right, and a desire of seeing all that were connected with him in situations of respectability, he would have been glad to exert for the advantage of Lady Bertram’s sister; but her husband’s profession was such as no interest could reach; and before he had time to devise any other method of assisting them, an absolute breach between the sisters had taken place. It was the natural result of the conduct of each party, and such as a very imprudent marriage almost always produces. To save herself from useless remonstrance, Mrs. Price never wrote to her family on the subject till actually married. Lady Bertram, who was a woman of very tranquil feelings, and a temper remarkably easy and indolent, would have contented herself with merely giving up her sister, and thinking no more of the matter; but Mrs. Norris had a spirit of activity, which could not be satisfied till she had written a long and angry letter to Fanny, to point out the folly of her conduct, and threaten her with all its possible ill consequences. Mrs. Price, in her turn, was injured and angry; and an answer, which comprehended each sister in its bitterness, and bestowed such very disrespectful reflections on the pride of Sir Thomas as Mrs. Norris could not possibly keep to herself, put an end to all intercourse between them for a considerable period.\n\nTheir homes were so distant, and the circles in which they moved so distinct, as almost to preclude the means of ever hearing of each other’s existence during the eleven following years, or, at least, to make it very wonderful to Sir Thomas that Mrs. Norris should ever have it in her power to tell them, as she now and then did, in an angry voice, that Fanny had got another child. By the end of eleven years, however, Mrs. Price could no longer afford to cherish pride or resentment, or to lose one connexion that might possibly assist her. A large and still increasing family, an husband disabled for active service, but not the less equal to company and good liquor, and a very small income to supply their wants, made her eager to regain the friends she had so carelessly sacrificed; and she addressed Lady Bertram in a letter which spoke so much contrition and despondence, such a superfluity of children, and such a want of almost everything else, as could not but dispose them all to a reconciliation. She was preparing for her ninth lying-in; and after bewailing the circumstance, and imploring their countenance as sponsors to the expected child, she could not conceal how important she felt they might be to the future maintenance of the eight already in being. Her eldest was a boy of ten years old, a fine spirited fellow, who longed to be out in the world; but what could she do? Was there any chance of his being hereafter useful to Sir Thomas in the concerns of his West Indian property? No situation would be beneath him; or what did Sir Thomas think of Woolwich? or how could a boy be sent out to the East?\n\nThe letter was not unproductive. It re-established peace and kindness. Sir Thomas sent friendly advice and professions, Lady Bertram dispatched money and baby-linen, and Mrs. Norris wrote the letters.",
+      "wordCount": 849,
+      "sha256": "a9e05d39e5f96a5cd2cfc054787c45ee1d1f3a0b81ff148995be6fa3c1bb53b6",
+      "upstreamSha256": "b34723544dbe8185e786d0fdd47e42e7e1ac4265b84141e31ca260c1e36b68d8"
+    },
+    {
+      "id": "austen-emma",
+      "authorId": "jane-austen",
+      "title": "Emma",
+      "year": 1815,
+      "edition": "English text, volume I, chapter I; first published December 1815, title page dated 1816",
+      "ebook": 158,
+      "role": "holdout",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/158",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/158/pg158.txt",
+      "sourceNote": "Opening 6 paragraphs of the specified section. Only whitespace reflowed; spelling, punctuation, and emphasis markers retained. No introductory/editorial material included.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "Emma Woodhouse, handsome, clever, and rich, with a comfortable home and happy disposition, seemed to unite some of the best blessings of existence; and had lived nearly twenty-one years in the world with very little to distress or vex her.\n\nShe was the youngest of the two daughters of a most affectionate, indulgent father; and had, in consequence of her sister’s marriage, been mistress of his house from a very early period. Her mother had died too long ago for her to have more than an indistinct remembrance of her caresses; and her place had been supplied by an excellent woman as governess, who had fallen little short of a mother in affection.\n\nSixteen years had Miss Taylor been in Mr. Woodhouse’s family, less as a governess than a friend, very fond of both daughters, but particularly of Emma. Between _them_ it was more the intimacy of sisters. Even before Miss Taylor had ceased to hold the nominal office of governess, the mildness of her temper had hardly allowed her to impose any restraint; and the shadow of authority being now long passed away, they had been living together as friend and friend very mutually attached, and Emma doing just what she liked; highly esteeming Miss Taylor’s judgment, but directed chiefly by her own.\n\nThe real evils, indeed, of Emma’s situation were the power of having rather too much her own way, and a disposition to think a little too well of herself; these were the disadvantages which threatened alloy to her many enjoyments. The danger, however, was at present so unperceived, that they did not by any means rank as misfortunes with her.\n\nSorrow came—a gentle sorrow—but not at all in the shape of any disagreeable consciousness.—Miss Taylor married. It was Miss Taylor’s loss which first brought grief. It was on the wedding-day of this beloved friend that Emma first sat in mournful thought of any continuance. The wedding over, and the bride-people gone, her father and herself were left to dine together, with no prospect of a third to cheer a long evening. Her father composed himself to sleep after dinner, as usual, and she had then only to sit and think of what she had lost.\n\nThe event had every promise of happiness for her friend. Mr. Weston was a man of unexceptionable character, easy fortune, suitable age, and pleasant manners; and there was some satisfaction in considering with what self-denying, generous friendship she had always wished and promoted the match; but it was a black morning’s work for her. The want of Miss Taylor would be felt every hour of every day. She recalled her past kindness—the kindness, the affection of sixteen years—how she had taught and how she had played with her from five years old—how she had devoted all her powers to attach and amuse her in health—and how nursed her through the various illnesses of childhood. A large debt of gratitude was owing here; but the intercourse of the last seven years, the equal footing and perfect unreserve which had soon followed Isabella’s marriage, on their being left to each other, was yet a dearer, tenderer recollection. She had been a friend and companion such as few possessed: intelligent, well-informed, useful, gentle, knowing all the ways of the family, interested in all its concerns, and peculiarly interested in herself, in every pleasure, every scheme of hers—one to whom she could speak every thought as it arose, and who had such an affection for her as could never find fault.",
+      "wordCount": 599,
+      "sha256": "6916a80b8435f9aeb3a164a48dc63bc521227daaeac8f7ffff15bb9a1e6adbe3",
+      "upstreamSha256": "532b122b4e6a76cc556d6fdcd729b5892f5c4ce4a1b7060b9f832adfad8680dc"
+    },
+    {
+      "id": "shelley-frankenstein",
+      "authorId": "mary-shelley",
+      "title": "Frankenstein",
+      "year": 1818,
+      "edition": "1818 edition, volume I, letter I",
+      "ebook": 41445,
+      "role": "other-human",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/41445",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/41445/pg41445.txt",
+      "sourceNote": "Opening 3 paragraphs of the specified section. Only whitespace reflowed; spelling, punctuation, and emphasis markers retained. No introductory/editorial material included.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "You will rejoice to hear that no disaster has accompanied the commencement of an enterprise which you have regarded with such evil forebodings. I arrived here yesterday; and my first task is to assure my dear sister of my welfare, and increasing confidence in the success of my undertaking.\n\nI am already far north of London; and as I walk in the streets of Petersburgh, I feel a cold northern breeze play upon my cheeks, which braces my nerves, and fills me with delight. Do you understand this feeling? This breeze, which has travelled from the regions towards which I am advancing, gives me a foretaste of those icy climes. Inspirited by this wind of promise, my day dreams become more fervent and vivid. I try in vain to be persuaded that the pole is the seat of frost and desolation; it ever presents itself to my imagination as the region of beauty and delight. There, Margaret, the sun is for ever visible; its broad disk just skirting the horizon, and diffusing a perpetual splendour. There—for with your leave, my sister, I will put some trust in preceding navigators—there snow and frost are banished; and, sailing over a calm sea, we may be wafted to a land surpassing in wonders and in beauty every region hitherto discovered on the habitable globe. Its productions and features may be without example, as the phænomena of the heavenly bodies undoubtedly are in those undiscovered solitudes. What may not be expected in a country of eternal light? I may there discover the wondrous power which attracts the needle; and may regulate a thousand celestial observations, that require only this voyage to render their seeming eccentricities consistent for ever. I shall satiate my ardent curiosity with the sight of a part of the world never before visited, and may tread a land never before imprinted by the foot of man. These are my enticements, and they are sufficient to conquer all fear of danger or death, and to induce me to commence this laborious voyage with the joy a child feels when he embarks in a little boat, with his holiday mates, on an expedition of discovery up his native river. But, supposing all these conjectures to be false, you cannot contest the inestimable benefit which I shall confer on all mankind to the last generation, by discovering a passage near the pole to those countries, to reach which at present so many months are requisite; or by ascertaining the secret of the magnet, which, if at all possible, can only be effected by an undertaking such as mine.\n\nThese reflections have dispelled the agitation with which I began my letter, and I feel my heart glow with an enthusiasm which elevates me to heaven; for nothing contributes so much to tranquillize the mind as a steady purpose,—a point on which the soul may fix its intellectual eye. This expedition has been the favourite dream of my early years. I have read with ardour the accounts of the various voyages which have been made in the prospect of arriving at the North Pacific Ocean through the seas which surround the pole. You may remember, that a history of all the voyages made for purposes of discovery composed the whole of our good uncle Thomas’s library. My education was neglected, yet I was passionately fond of reading. These volumes were my study day and night, and my familiarity with them increased that regret which I had felt, as a child, on learning that my father’s dying injunction had forbidden my uncle to allow me to embark in a sea-faring life.",
+      "wordCount": 608,
+      "sha256": "b530c9a8b7502357b0a0a159b7494fab2fe028707c70e86d911e6681e4035112",
+      "upstreamSha256": "54b2faba2485a5697606ecd0e4afb574e14bab51820bef4efa72ce8c91eff787"
+    },
+    {
+      "id": "synthetic-social-scene",
+      "authorId": "synthetic-ai",
+      "title": "An evening at the country house",
+      "year": null,
+      "edition": "Frozen AI-generated fixture v1",
+      "ebook": null,
+      "role": "synthetic",
+      "sourceUrl": null,
+      "originalTextUrl": null,
+      "sourceNote": "Generated by the implementation assistant for this demo. The exact model identifier is not available. No runtime inference service is called.",
+      "rights": "New synthetic text supplied with this demo; not a historical public-domain source or an archived human sample.",
+      "generationPrompt": "Write about 250 words of original, modern English prose about a social gathering, first impressions, and courtship. Use neutral explanatory language. Do not quote an existing book or imitate a named author.",
+      "generator": {
+        "kind": "AI",
+        "name": "Implementation assistant",
+        "model": null,
+        "seed": null,
+        "reproducibility": "Frozen output and SHA-256 hash, not reproducible model sampling."
+      },
+      "text": "The gathering at the country house offered a useful opportunity to observe the relationship between personal ambition and social expectation. Each guest arrived with a different objective, yet all understood the importance of making a favorable impression. The hostess welcomed everyone warmly and encouraged conversation among people who might not otherwise have met. In this setting, even an ordinary exchange could influence a future friendship or a possible marriage.\n\nClara initially believed that a person's manners provided a reliable guide to character. A confident introduction suggested intelligence, while a thoughtful compliment appeared to demonstrate kindness. As the evening continued, however, she noticed that these signals were not always consistent. One guest spoke generously about a neighbor but refused a small request for assistance. Another remained quiet throughout dinner and later helped the servants without drawing attention to himself.\n\nThese observations led Clara to reconsider her assumptions. Social success, she realized, did not necessarily reflect moral worth. The qualities that made someone appealing in a crowded room could differ from the qualities that sustained a lasting relationship. Rather than accepting the first explanation that came to mind, she began to ask what evidence supported it and what other interpretation might be possible.\n\nBy the end of the visit, Clara had not reached a final judgment about every person she had encountered. Instead, she had developed a more patient approach to understanding them. The experience illustrates a broader principle: thoughtful evaluation depends on context, repeated observation, and a willingness to revise an initial impression. In both friendship and courtship, certainty can be less valuable than careful attention.",
+      "wordCount": 265,
+      "sha256": "1e33fcd38675af5acecb1f04377389474d23436e4647c472cb2dd815f660c6c8",
+      "upstreamSha256": null
+    },
+    {
+      "id": "austen-fragment",
+      "authorId": "jane-austen",
+      "title": "Emma · opening sentence",
+      "year": 1815,
+      "edition": "English text, volume I, chapter I; first published December 1815, title page dated 1816",
+      "ebook": 158,
+      "role": "short",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/158",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/158/pg158.txt",
+      "sourceNote": "First paragraph of the Emma holdout. Intentional overlap between two test cases; neither enters the baseline.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "Emma Woodhouse, handsome, clever, and rich, with a comfortable home and happy disposition, seemed to unite some of the best blessings of existence; and had lived nearly twenty-one years in the world with very little to distress or vex her.",
+      "wordCount": 41,
+      "sha256": "4c40b85c7fa3c3fe9aa0881d235d20f65b7f3a3feca409c3ddb29f746a37dd92",
+      "upstreamSha256": "532b122b4e6a76cc556d6fdcd729b5892f5c4ce4a1b7060b9f832adfad8680dc",
+      "derivedFrom": "austen-emma"
+    }
+  ]
+}
