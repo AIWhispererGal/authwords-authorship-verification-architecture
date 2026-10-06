@@ -1,0 +1,7 @@
+# Netlify builds the Next.js app with its official runtime (auto-installed).
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
