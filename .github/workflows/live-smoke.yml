@@ -1,0 +1,33 @@
+name: Live smoke
+
+# Runs both Playwright smoke suites against a deployed instance.
+# Trigger it from the Actions tab (or the API) with the site URL.
+on:
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: Deployed site to test
+        required: true
+        default: https://authwords-app.netlify.app
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Deploy check
+        run: node scripts/check-deploy.mjs "${{ github.event.inputs.base_url }}"
+      - name: Workspace smoke
+        env:
+          TEST_BASE_URL: ${{ github.event.inputs.base_url }}
+        run: node scripts/smoke.mjs
+      - name: Public demo smoke
+        env:
+          TEST_BASE_URL: ${{ github.event.inputs.base_url }}
+        run: node scripts/public-demo-smoke.mjs
