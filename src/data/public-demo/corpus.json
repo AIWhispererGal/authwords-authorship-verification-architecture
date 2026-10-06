@@ -1,117 +1,327 @@
 {
-  "version": "austen-public-v1",
-  "name": "The Austen collection",
-  "importedAt": "2026-10-05T04:45:44.740Z",
+  "version": "public-v2",
+  "name": "The public collections",
+  "importedAt": "2026-10-06T05:59:07.429Z",
   "purpose": "Small, reproducible product evaluation. Not an authorship benchmark, a student dataset, or fairness validation.",
   "processing": "Public literary excerpts are intentionally bundled as readable text. This public-only fixture does not authorize storing or exporting private student text.",
-  "rightsScope": "The five historical source works are listed as public domain in the USA. Check local law before reuse elsewhere. No universal copyright clearance is claimed.",
+  "rightsScope": "The historical source works are listed as public domain in the USA. Check local law before reuse elsewhere. No universal copyright clearance is claimed.",
   "acknowledgement": "Source reference: Project Gutenberg. References are attribution, not branding, sponsorship, or endorsement. Headers, license boilerplate, and editorial content are not part of the excerpt texts.",
   "sourcePolicyUrl": "https://www.gutenberg.org/policy/license.html",
   "limits": [
-    "Only two historical English-language authors; not a representative demographic sample.",
+    "Six historical English-language authors in three pairs; not a representative demographic sample.",
     "Three baseline passages from three books cannot estimate a calibrated posterior or prove authorship.",
-    "The Shelley comparison changes genre and narrative voice; this is a confound, not a clean accuracy benchmark.",
+    "Each other-human control changes genre or register as well as author; this is a confound, not a clean accuracy benchmark.",
     "Historical publication years are not a measured student learning trajectory.",
     "A language model may have encountered these public books during training; this is not a contamination-free AI benchmark.",
-    "One synthetic output cannot establish AI-detection accuracy. Similarity can be high for another author or low for the same author."
+    "One synthetic output per collection cannot establish AI-detection accuracy. Similarity can be high for another author or low for the same author."
   ],
   "authors": [
     {
       "id": "jane-austen",
       "name": "Jane Austen",
+      "role": "English novelist",
       "lifespan": "1775–1817",
       "birthYear": 1775,
       "region": "Steventon, Hampshire, England",
-      "regionMeaning": "Documented birthplace, not an inferred linguistic trait",
       "language": "English",
+      "biographyUrl": "https://www.bbc.co.uk/history/historic_figures/austen_jane.shtml",
+      "languageSourceUrl": "https://www.gutenberg.org/ebooks/author/68",
+      "description": "English novelist. The baseline uses three separate books published in 1811, 1813, and 1814; Emma is held out.",
+      "regionMeaning": "Documented birthplace, not an inferred linguistic trait",
       "languageMeaning": "Language of the source texts, not an assessment of native-language status",
       "eslStatus": null,
       "proficiency": null,
-      "educationLevel": null,
-      "biographyUrl": "https://www.bbc.co.uk/history/historic_figures/austen_jane.shtml",
-      "languageSourceUrl": "https://www.gutenberg.org/ebooks/author/68",
-      "description": "English novelist. The baseline uses three separate books published in 1811, 1813, and 1814; Emma is held out."
+      "educationLevel": null
     },
     {
       "id": "mary-shelley",
       "name": "Mary Shelley",
+      "role": "English novelist",
       "lifespan": "1797–1851",
       "birthYear": 1797,
       "region": "London, England",
-      "regionMeaning": "Documented birthplace, not an inferred linguistic trait",
       "language": "English",
-      "languageMeaning": "Language of the source text, not an assessment of native-language status",
-      "eslStatus": null,
-      "proficiency": null,
-      "educationLevel": null,
       "biographyUrl": "https://poets.org/poet/mary-shelley",
       "languageSourceUrl": "https://www.gutenberg.org/ebooks/41445",
-      "description": "English novelist. The 1818 edition of Frankenstein supplies a known other-author control with a different genre and narrative voice."
+      "description": "English novelist. The 1818 edition of Frankenstein supplies a known other-author control with a different genre and narrative voice.",
+      "regionMeaning": "Documented birthplace, not an inferred linguistic trait",
+      "languageMeaning": "Language of the source texts, not an assessment of native-language status",
+      "eslStatus": null,
+      "proficiency": null,
+      "educationLevel": null
+    },
+    {
+      "id": "john-stuart-mill",
+      "name": "John Stuart Mill",
+      "role": "English philosopher",
+      "lifespan": "1806–1873",
+      "birthYear": 1806,
+      "region": "London, England",
+      "language": "English",
+      "biographyUrl": "https://plato.stanford.edu/entries/mill/",
+      "languageSourceUrl": "https://www.gutenberg.org/ebooks/34901",
+      "description": "English philosopher and political economist. The baseline uses three essays from 1859, 1863, and 1869; the posthumous Autobiography is held out.",
+      "regionMeaning": "Documented birthplace, not an inferred linguistic trait",
+      "languageMeaning": "Language of the source texts, not an assessment of native-language status",
+      "eslStatus": null,
+      "proficiency": null,
+      "educationLevel": null
+    },
+    {
+      "id": "william-james",
+      "name": "William James",
+      "role": "American philosopher",
+      "lifespan": "1842–1910",
+      "birthYear": 1842,
+      "region": "New York City, New York, United States",
+      "language": "English",
+      "biographyUrl": "https://plato.stanford.edu/entries/james/",
+      "languageSourceUrl": "https://www.gutenberg.org/ebooks/5116",
+      "description": "American philosopher and psychologist. The opening lecture of Pragmatism supplies a known other-author control from a later generation and a spoken register.",
+      "regionMeaning": "Documented birthplace, not an inferred linguistic trait",
+      "languageMeaning": "Language of the source texts, not an assessment of native-language status",
+      "eslStatus": null,
+      "proficiency": null,
+      "educationLevel": null
+    },
+    {
+      "id": "charles-darwin",
+      "name": "Charles Darwin",
+      "role": "English naturalist",
+      "lifespan": "1809–1882",
+      "birthYear": 1809,
+      "region": "Shrewsbury, Shropshire, England",
+      "language": "English",
+      "biographyUrl": "https://www.darwinproject.ac.uk/about-darwin",
+      "languageSourceUrl": "https://www.gutenberg.org/ebooks/1228",
+      "description": "English naturalist. The baseline uses three books from 1839, 1859, and 1871; his last book, on earthworms, is held out.",
+      "regionMeaning": "Documented birthplace, not an inferred linguistic trait",
+      "languageMeaning": "Language of the source texts, not an assessment of native-language status",
+      "eslStatus": null,
+      "proficiency": null,
+      "educationLevel": null
+    },
+    {
+      "id": "alfred-russel-wallace",
+      "name": "Alfred Russel Wallace",
+      "role": "British naturalist",
+      "lifespan": "1823–1913",
+      "birthYear": 1823,
+      "region": "Llanbadoc, Monmouthshire, Wales",
+      "language": "English",
+      "biographyUrl": "https://www.nhm.ac.uk/discover/alfred-russel-wallace.html",
+      "languageSourceUrl": "https://www.gutenberg.org/ebooks/2530",
+      "description": "British naturalist and co-discoverer of natural selection. The opening of The Malay Archipelago supplies a known other-author control in a travel register.",
+      "regionMeaning": "Documented birthplace, not an inferred linguistic trait",
+      "languageMeaning": "Language of the source texts, not an assessment of native-language status",
+      "eslStatus": null,
+      "proficiency": null,
+      "educationLevel": null
     }
   ],
-  "baselineIds": [
-    "austen-sense",
-    "austen-pride",
-    "austen-mansfield"
-  ],
-  "scenarios": [
+  "defaultCollectionId": "austen",
+  "collections": [
     {
-      "id": "same-author",
-      "sampleId": "austen-emma",
-      "label": "Same author",
-      "title": "A new chapter, the same author",
-      "summary": "Emma is held out of Austen’s baseline. See how a new work compares.",
-      "truth": "Published attribution: Jane Austen",
-      "contextFlags": [
-        "SMALL_REFERENCE_SET"
+      "id": "austen",
+      "name": "The Austen collection",
+      "kind": "A novelist",
+      "question": "Would this passage fit Jane Austen’s writing history?",
+      "authorId": "jane-austen",
+      "controlAuthorId": "mary-shelley",
+      "baselineIntro": "Three different books. One published author. Choose which excerpts contribute.",
+      "baselineIds": [
+        "austen-sense",
+        "austen-pride",
+        "austen-mansfield"
+      ],
+      "scenarios": [
+        {
+          "id": "same-author",
+          "sampleId": "austen-emma",
+          "label": "Same author",
+          "title": "A new chapter, the same author",
+          "summary": "Emma is held out of Austen’s baseline. See how a new work compares.",
+          "truth": "Published attribution: Jane Austen",
+          "contextFlags": [
+            "SMALL_REFERENCE_SET"
+          ]
+        },
+        {
+          "id": "other-human",
+          "sampleId": "shelley-frankenstein",
+          "label": "Other human",
+          "title": "Human writing, a different author",
+          "summary": "Mary Shelley is not Jane Austen. Different authorship is not the same as AI-generated.",
+          "truth": "Published attribution: Mary Shelley",
+          "contextFlags": [
+            "SMALL_REFERENCE_SET",
+            "GENRE_AND_VOICE_SHIFT"
+          ]
+        },
+        {
+          "id": "ai-fixture",
+          "sampleId": "synthetic-social-scene",
+          "label": "AI fixture",
+          "title": "A frozen, openly labeled AI sample",
+          "summary": "One original synthetic passage, not a proxy for every model or writing style.",
+          "truth": "Known AI-generated fixture; model identifier unavailable",
+          "contextFlags": [
+            "SMALL_REFERENCE_SET",
+            "MODERN_LANGUAGE_SHIFT",
+            "SINGLE_SYNTHETIC_EXAMPLE"
+          ]
+        },
+        {
+          "id": "too-short",
+          "sampleId": "austen-fragment",
+          "label": "Too short",
+          "title": "Sometimes the honest answer is less",
+          "summary": "Even a genuine Austen passage can be too short to support comparison.",
+          "truth": "Published attribution: Jane Austen; truncated holdout",
+          "contextFlags": [
+            "SHORT_SAMPLE",
+            "SMALL_REFERENCE_SET"
+          ]
+        }
       ]
     },
     {
-      "id": "other-human",
-      "sampleId": "shelley-frankenstein",
-      "label": "Other human",
-      "title": "Human writing, a different author",
-      "summary": "Mary Shelley is not Jane Austen. Different authorship is not the same as AI-generated.",
-      "truth": "Published attribution: Mary Shelley",
-      "contextFlags": [
-        "SMALL_REFERENCE_SET",
-        "GENRE_AND_VOICE_SHIFT"
+      "id": "mill",
+      "name": "The Mill collection",
+      "kind": "A philosopher",
+      "question": "Would this passage fit John Stuart Mill’s writing history?",
+      "authorId": "john-stuart-mill",
+      "controlAuthorId": "william-james",
+      "baselineIntro": "Three essays across a decade. One philosopher. Choose which excerpts contribute.",
+      "baselineIds": [
+        "mill-liberty",
+        "mill-utilitarianism",
+        "mill-subjection"
+      ],
+      "scenarios": [
+        {
+          "id": "same-author",
+          "sampleId": "mill-autobiography",
+          "label": "Same author",
+          "title": "A later work, the same philosopher",
+          "summary": "The Autobiography is held out of Mill’s baseline. See how a memoir compares with his essays.",
+          "truth": "Published attribution: John Stuart Mill",
+          "contextFlags": [
+            "SMALL_REFERENCE_SET"
+          ]
+        },
+        {
+          "id": "other-human",
+          "sampleId": "james-pragmatism",
+          "label": "Other human",
+          "title": "Human writing, a different philosopher",
+          "summary": "William James lectured a generation later and an ocean away. Different authorship is not the same as AI-generated.",
+          "truth": "Published attribution: William James",
+          "contextFlags": [
+            "SMALL_REFERENCE_SET",
+            "GENRE_AND_VOICE_SHIFT"
+          ]
+        },
+        {
+          "id": "ai-fixture",
+          "sampleId": "synthetic-liberty-essay",
+          "label": "AI fixture",
+          "title": "A frozen, openly labeled AI sample",
+          "summary": "One original synthetic essay on liberty, not a proxy for every model or writing style.",
+          "truth": "Known AI-generated fixture; model identifier unavailable",
+          "contextFlags": [
+            "SMALL_REFERENCE_SET",
+            "MODERN_LANGUAGE_SHIFT",
+            "SINGLE_SYNTHETIC_EXAMPLE"
+          ]
+        },
+        {
+          "id": "too-short",
+          "sampleId": "mill-fragment",
+          "label": "Too short",
+          "title": "Sometimes the honest answer is less",
+          "summary": "Even a genuine Mill sentence can be too short to support comparison.",
+          "truth": "Published attribution: John Stuart Mill; truncated holdout",
+          "contextFlags": [
+            "SHORT_SAMPLE",
+            "SMALL_REFERENCE_SET"
+          ]
+        }
       ]
     },
     {
-      "id": "ai-fixture",
-      "sampleId": "synthetic-social-scene",
-      "label": "AI fixture",
-      "title": "A frozen, openly labeled AI sample",
-      "summary": "One original synthetic passage, not a proxy for every model or writing style.",
-      "truth": "Known AI-generated fixture; model identifier unavailable",
-      "contextFlags": [
-        "SMALL_REFERENCE_SET",
-        "MODERN_LANGUAGE_SHIFT",
-        "SINGLE_SYNTHETIC_EXAMPLE"
-      ]
-    },
-    {
-      "id": "too-short",
-      "sampleId": "austen-fragment",
-      "label": "Too short",
-      "title": "Sometimes the honest answer is less",
-      "summary": "Even a genuine Austen passage can be too short to support comparison.",
-      "truth": "Published attribution: Jane Austen; truncated holdout",
-      "contextFlags": [
-        "SHORT_SAMPLE",
-        "SMALL_REFERENCE_SET"
+      "id": "darwin",
+      "name": "The Darwin collection",
+      "kind": "A naturalist",
+      "question": "Would this passage fit Charles Darwin’s writing history?",
+      "authorId": "charles-darwin",
+      "controlAuthorId": "alfred-russel-wallace",
+      "baselineIntro": "Three books across three decades. One naturalist. Choose which excerpts contribute.",
+      "baselineIds": [
+        "darwin-beagle",
+        "darwin-origin",
+        "darwin-descent"
+      ],
+      "scenarios": [
+        {
+          "id": "same-author",
+          "sampleId": "darwin-worms",
+          "label": "Same author",
+          "title": "A late work, the same naturalist",
+          "summary": "Darwin’s last book is held out of his baseline. See how it compares with three earlier ones.",
+          "truth": "Published attribution: Charles Darwin",
+          "contextFlags": [
+            "SMALL_REFERENCE_SET"
+          ]
+        },
+        {
+          "id": "other-human",
+          "sampleId": "wallace-malay",
+          "label": "Other human",
+          "title": "Human writing, a different naturalist",
+          "summary": "Alfred Russel Wallace reached natural selection independently. Different authorship is not the same as AI-generated.",
+          "truth": "Published attribution: Alfred Russel Wallace",
+          "contextFlags": [
+            "SMALL_REFERENCE_SET",
+            "GENRE_AND_VOICE_SHIFT"
+          ]
+        },
+        {
+          "id": "ai-fixture",
+          "sampleId": "synthetic-garden-notes",
+          "label": "AI fixture",
+          "title": "A frozen, openly labeled AI sample",
+          "summary": "One original synthetic field note, not a proxy for every model or writing style.",
+          "truth": "Known AI-generated fixture; model identifier unavailable",
+          "contextFlags": [
+            "SMALL_REFERENCE_SET",
+            "MODERN_LANGUAGE_SHIFT",
+            "SINGLE_SYNTHETIC_EXAMPLE"
+          ]
+        },
+        {
+          "id": "too-short",
+          "sampleId": "darwin-fragment",
+          "label": "Too short",
+          "title": "Sometimes the honest answer is less",
+          "summary": "Even a genuine Darwin sentence can be too short to support comparison.",
+          "truth": "Published attribution: Charles Darwin; truncated holdout",
+          "contextFlags": [
+            "SHORT_SAMPLE",
+            "SMALL_REFERENCE_SET"
+          ]
+        }
       ]
     }
   ],
   "excerpts": [
     {
       "id": "austen-sense",
-      "authorId": "jane-austen",
       "title": "Sense and Sensibility",
       "year": 1811,
       "edition": "English text, chapter 1",
       "ebook": 161,
+      "authorId": "jane-austen",
       "role": "baseline",
       "sourceUrl": "https://www.gutenberg.org/ebooks/161",
       "originalTextUrl": "https://www.gutenberg.org/cache/epub/161/pg161.txt",
@@ -120,15 +330,16 @@
       "text": "The family of Dashwood had long been settled in Sussex. Their estate was large, and their residence was at Norland Park, in the centre of their property, where, for many generations, they had lived in so respectable a manner as to engage the general good opinion of their surrounding acquaintance. The late owner of this estate was a single man, who lived to a very advanced age, and who for many years of his life, had a constant companion and housekeeper in his sister. But her death, which happened ten years before his own, produced a great alteration in his home; for to supply her loss, he invited and received into his house the family of his nephew Mr. Henry Dashwood, the legal inheritor of the Norland estate, and the person to whom he intended to bequeath it. In the society of his nephew and niece, and their children, the old Gentleman’s days were comfortably spent. His attachment to them all increased. The constant attention of Mr. and Mrs. Henry Dashwood to his wishes, which proceeded not merely from interest, but from goodness of heart, gave him every degree of solid comfort which his age could receive; and the cheerfulness of the children added a relish to his existence.\n\nBy a former marriage, Mr. Henry Dashwood had one son: by his present lady, three daughters. The son, a steady respectable young man, was amply provided for by the fortune of his mother, which had been large, and half of which devolved on him on his coming of age. By his own marriage, likewise, which happened soon afterwards, he added to his wealth. To him therefore the succession to the Norland estate was not so really important as to his sisters; for their fortune, independent of what might arise to them from their father’s inheriting that property, could be but small. Their mother had nothing, and their father only seven thousand pounds in his own disposal; for the remaining moiety of his first wife’s fortune was also secured to her child, and he had only a life-interest in it.\n\nThe old gentleman died: his will was read, and like almost every other will, gave as much disappointment as pleasure. He was neither so unjust, nor so ungrateful, as to leave his estate from his nephew;—but he left it to him on such terms as destroyed half the value of the bequest. Mr. Dashwood had wished for it more for the sake of his wife and daughters than for himself or his son;—but to his son, and his son’s son, a child of four years old, it was secured, in such a way, as to leave to himself no power of providing for those who were most dear to him, and who most needed a provision by any charge on the estate, or by any sale of its valuable woods. The whole was tied up for the benefit of this child, who, in occasional visits with his father and mother at Norland, had so far gained on the affections of his uncle, by such attractions as are by no means unusual in children of two or three years old; an imperfect articulation, an earnest desire of having his own way, many cunning tricks, and a great deal of noise, as to outweigh all the value of all the attention which, for years, he had received from his niece and her daughters. He meant not to be unkind, however, and, as a mark of his affection for the three girls, he left them a thousand pounds a-piece.",
       "wordCount": 598,
       "sha256": "f889721d6e2c41f11e442fd283260d27076aaba4eb80d4208bd7506047b5e6a4",
-      "upstreamSha256": "22272ec4d4da2f50cda51edf34ab8486b325c4a99580120db565fb8917228a22"
+      "upstreamSha256": "22272ec4d4da2f50cda51edf34ab8486b325c4a99580120db565fb8917228a22",
+      "collectionId": "austen"
     },
     {
       "id": "austen-pride",
-      "authorId": "jane-austen",
       "title": "Pride and Prejudice",
       "year": 1813,
       "edition": "English text, chapter I; text-only archive edition #42671, novel text only",
       "ebook": 42671,
+      "authorId": "jane-austen",
       "role": "baseline",
       "sourceUrl": "https://www.gutenberg.org/ebooks/42671",
       "originalTextUrl": "https://www.gutenberg.org/cache/epub/42671/pg42671.txt",
@@ -137,15 +348,16 @@
       "text": "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.\n\nHowever little known the feelings or views of such a man may be on his first entering a neighbourhood, this truth is so well fixed in the minds of the surrounding families, that he is considered as the rightful property of some one or other of their daughters.\n\n\"My dear Mr. Bennet,\" said his lady to him one day, \"have you heard that Netherfield Park is let at last?\"\n\nMr. Bennet replied that he had not.\n\n\"But it is,\" returned she; \"for Mrs. Long has just been here, and she told me all about it.\"\n\nMr. Bennet made no answer.\n\n\"Do not you want to know who has taken it?\" cried his wife impatiently.\n\n\"_You_ want to tell me, and I have no objection to hearing it.\"\n\nThis was invitation enough.\n\n\"Why, my dear, you must know, Mrs. Long says that Netherfield is taken by a young man of large fortune from the north of England; that he came down on Monday in a chaise and four to see the place, and was so much delighted with it that he agreed with Mr. Morris immediately; that he is to take possession before Michaelmas, and some of his servants are to be in the house by the end of next week.\"\n\n\"What is his name?\"\n\n\"Bingley.\"\n\n\"Is he married or single?\"\n\n\"Oh! single, my dear, to be sure! A single man of large fortune; four or five thousand a year. What a fine thing for our girls!\"\n\n\"How so? how can it affect them?\"\n\n\"My dear Mr. Bennet,\" replied his wife, \"how can you be so tiresome! You must know that I am thinking of his marrying one of them.\"",
       "wordCount": 302,
       "sha256": "ce5ddc0d3374ffaedbdbcc94a32cb14fdb7737222afdf98576b76a5d78d22896",
-      "upstreamSha256": "3d2d320092e4b501cd0075bbc4fccac2c322d925710a9df05172e9cef86b5863"
+      "upstreamSha256": "3d2d320092e4b501cd0075bbc4fccac2c322d925710a9df05172e9cef86b5863",
+      "collectionId": "austen"
     },
     {
       "id": "austen-mansfield",
-      "authorId": "jane-austen",
       "title": "Mansfield Park",
       "year": 1814,
       "edition": "English text, chapter 1",
       "ebook": 141,
+      "authorId": "jane-austen",
       "role": "baseline",
       "sourceUrl": "https://www.gutenberg.org/ebooks/141",
       "originalTextUrl": "https://www.gutenberg.org/cache/epub/141/pg141.txt",
@@ -154,15 +366,16 @@
       "text": "About thirty years ago Miss Maria Ward, of Huntingdon, with only seven thousand pounds, had the good luck to captivate Sir Thomas Bertram, of Mansfield Park, in the county of Northampton, and to be thereby raised to the rank of a baronet’s lady, with all the comforts and consequences of an handsome house and large income. All Huntingdon exclaimed on the greatness of the match, and her uncle, the lawyer, himself, allowed her to be at least three thousand pounds short of any equitable claim to it. She had two sisters to be benefited by her elevation; and such of their acquaintance as thought Miss Ward and Miss Frances quite as handsome as Miss Maria, did not scruple to predict their marrying with almost equal advantage. But there certainly are not so many men of large fortune in the world as there are pretty women to deserve them. Miss Ward, at the end of half a dozen years, found herself obliged to be attached to the Rev. Mr. Norris, a friend of her brother-in-law, with scarcely any private fortune, and Miss Frances fared yet worse. Miss Ward’s match, indeed, when it came to the point, was not contemptible: Sir Thomas being happily able to give his friend an income in the living of Mansfield; and Mr. and Mrs. Norris began their career of conjugal felicity with very little less than a thousand a year. But Miss Frances married, in the common phrase, to disoblige her family, and by fixing on a lieutenant of marines, without education, fortune, or connexions, did it very thoroughly. She could hardly have made a more untoward choice. Sir Thomas Bertram had interest, which, from principle as well as pride—from a general wish of doing right, and a desire of seeing all that were connected with him in situations of respectability, he would have been glad to exert for the advantage of Lady Bertram’s sister; but her husband’s profession was such as no interest could reach; and before he had time to devise any other method of assisting them, an absolute breach between the sisters had taken place. It was the natural result of the conduct of each party, and such as a very imprudent marriage almost always produces. To save herself from useless remonstrance, Mrs. Price never wrote to her family on the subject till actually married. Lady Bertram, who was a woman of very tranquil feelings, and a temper remarkably easy and indolent, would have contented herself with merely giving up her sister, and thinking no more of the matter; but Mrs. Norris had a spirit of activity, which could not be satisfied till she had written a long and angry letter to Fanny, to point out the folly of her conduct, and threaten her with all its possible ill consequences. Mrs. Price, in her turn, was injured and angry; and an answer, which comprehended each sister in its bitterness, and bestowed such very disrespectful reflections on the pride of Sir Thomas as Mrs. Norris could not possibly keep to herself, put an end to all intercourse between them for a considerable period.\n\nTheir homes were so distant, and the circles in which they moved so distinct, as almost to preclude the means of ever hearing of each other’s existence during the eleven following years, or, at least, to make it very wonderful to Sir Thomas that Mrs. Norris should ever have it in her power to tell them, as she now and then did, in an angry voice, that Fanny had got another child. By the end of eleven years, however, Mrs. Price could no longer afford to cherish pride or resentment, or to lose one connexion that might possibly assist her. A large and still increasing family, an husband disabled for active service, but not the less equal to company and good liquor, and a very small income to supply their wants, made her eager to regain the friends she had so carelessly sacrificed; and she addressed Lady Bertram in a letter which spoke so much contrition and despondence, such a superfluity of children, and such a want of almost everything else, as could not but dispose them all to a reconciliation. She was preparing for her ninth lying-in; and after bewailing the circumstance, and imploring their countenance as sponsors to the expected child, she could not conceal how important she felt they might be to the future maintenance of the eight already in being. Her eldest was a boy of ten years old, a fine spirited fellow, who longed to be out in the world; but what could she do? Was there any chance of his being hereafter useful to Sir Thomas in the concerns of his West Indian property? No situation would be beneath him; or what did Sir Thomas think of Woolwich? or how could a boy be sent out to the East?\n\nThe letter was not unproductive. It re-established peace and kindness. Sir Thomas sent friendly advice and professions, Lady Bertram dispatched money and baby-linen, and Mrs. Norris wrote the letters.",
       "wordCount": 849,
       "sha256": "a9e05d39e5f96a5cd2cfc054787c45ee1d1f3a0b81ff148995be6fa3c1bb53b6",
-      "upstreamSha256": "b34723544dbe8185e786d0fdd47e42e7e1ac4265b84141e31ca260c1e36b68d8"
+      "upstreamSha256": "b34723544dbe8185e786d0fdd47e42e7e1ac4265b84141e31ca260c1e36b68d8",
+      "collectionId": "austen"
     },
     {
       "id": "austen-emma",
-      "authorId": "jane-austen",
       "title": "Emma",
       "year": 1815,
       "edition": "English text, volume I, chapter I; first published December 1815, title page dated 1816",
       "ebook": 158,
+      "authorId": "jane-austen",
       "role": "holdout",
       "sourceUrl": "https://www.gutenberg.org/ebooks/158",
       "originalTextUrl": "https://www.gutenberg.org/cache/epub/158/pg158.txt",
@@ -171,15 +384,16 @@
       "text": "Emma Woodhouse, handsome, clever, and rich, with a comfortable home and happy disposition, seemed to unite some of the best blessings of existence; and had lived nearly twenty-one years in the world with very little to distress or vex her.\n\nShe was the youngest of the two daughters of a most affectionate, indulgent father; and had, in consequence of her sister’s marriage, been mistress of his house from a very early period. Her mother had died too long ago for her to have more than an indistinct remembrance of her caresses; and her place had been supplied by an excellent woman as governess, who had fallen little short of a mother in affection.\n\nSixteen years had Miss Taylor been in Mr. Woodhouse’s family, less as a governess than a friend, very fond of both daughters, but particularly of Emma. Between _them_ it was more the intimacy of sisters. Even before Miss Taylor had ceased to hold the nominal office of governess, the mildness of her temper had hardly allowed her to impose any restraint; and the shadow of authority being now long passed away, they had been living together as friend and friend very mutually attached, and Emma doing just what she liked; highly esteeming Miss Taylor’s judgment, but directed chiefly by her own.\n\nThe real evils, indeed, of Emma’s situation were the power of having rather too much her own way, and a disposition to think a little too well of herself; these were the disadvantages which threatened alloy to her many enjoyments. The danger, however, was at present so unperceived, that they did not by any means rank as misfortunes with her.\n\nSorrow came—a gentle sorrow—but not at all in the shape of any disagreeable consciousness.—Miss Taylor married. It was Miss Taylor’s loss which first brought grief. It was on the wedding-day of this beloved friend that Emma first sat in mournful thought of any continuance. The wedding over, and the bride-people gone, her father and herself were left to dine together, with no prospect of a third to cheer a long evening. Her father composed himself to sleep after dinner, as usual, and she had then only to sit and think of what she had lost.\n\nThe event had every promise of happiness for her friend. Mr. Weston was a man of unexceptionable character, easy fortune, suitable age, and pleasant manners; and there was some satisfaction in considering with what self-denying, generous friendship she had always wished and promoted the match; but it was a black morning’s work for her. The want of Miss Taylor would be felt every hour of every day. She recalled her past kindness—the kindness, the affection of sixteen years—how she had taught and how she had played with her from five years old—how she had devoted all her powers to attach and amuse her in health—and how nursed her through the various illnesses of childhood. A large debt of gratitude was owing here; but the intercourse of the last seven years, the equal footing and perfect unreserve which had soon followed Isabella’s marriage, on their being left to each other, was yet a dearer, tenderer recollection. She had been a friend and companion such as few possessed: intelligent, well-informed, useful, gentle, knowing all the ways of the family, interested in all its concerns, and peculiarly interested in herself, in every pleasure, every scheme of hers—one to whom she could speak every thought as it arose, and who had such an affection for her as could never find fault.",
       "wordCount": 599,
       "sha256": "6916a80b8435f9aeb3a164a48dc63bc521227daaeac8f7ffff15bb9a1e6adbe3",
-      "upstreamSha256": "532b122b4e6a76cc556d6fdcd729b5892f5c4ce4a1b7060b9f832adfad8680dc"
+      "upstreamSha256": "532b122b4e6a76cc556d6fdcd729b5892f5c4ce4a1b7060b9f832adfad8680dc",
+      "collectionId": "austen"
     },
     {
       "id": "shelley-frankenstein",
-      "authorId": "mary-shelley",
       "title": "Frankenstein",
       "year": 1818,
       "edition": "1818 edition, volume I, letter I",
       "ebook": 41445,
+      "authorId": "mary-shelley",
       "role": "other-human",
       "sourceUrl": "https://www.gutenberg.org/ebooks/41445",
       "originalTextUrl": "https://www.gutenberg.org/cache/epub/41445/pg41445.txt",
@@ -188,7 +402,27 @@
       "text": "You will rejoice to hear that no disaster has accompanied the commencement of an enterprise which you have regarded with such evil forebodings. I arrived here yesterday; and my first task is to assure my dear sister of my welfare, and increasing confidence in the success of my undertaking.\n\nI am already far north of London; and as I walk in the streets of Petersburgh, I feel a cold northern breeze play upon my cheeks, which braces my nerves, and fills me with delight. Do you understand this feeling? This breeze, which has travelled from the regions towards which I am advancing, gives me a foretaste of those icy climes. Inspirited by this wind of promise, my day dreams become more fervent and vivid. I try in vain to be persuaded that the pole is the seat of frost and desolation; it ever presents itself to my imagination as the region of beauty and delight. There, Margaret, the sun is for ever visible; its broad disk just skirting the horizon, and diffusing a perpetual splendour. There—for with your leave, my sister, I will put some trust in preceding navigators—there snow and frost are banished; and, sailing over a calm sea, we may be wafted to a land surpassing in wonders and in beauty every region hitherto discovered on the habitable globe. Its productions and features may be without example, as the phænomena of the heavenly bodies undoubtedly are in those undiscovered solitudes. What may not be expected in a country of eternal light? I may there discover the wondrous power which attracts the needle; and may regulate a thousand celestial observations, that require only this voyage to render their seeming eccentricities consistent for ever. I shall satiate my ardent curiosity with the sight of a part of the world never before visited, and may tread a land never before imprinted by the foot of man. These are my enticements, and they are sufficient to conquer all fear of danger or death, and to induce me to commence this laborious voyage with the joy a child feels when he embarks in a little boat, with his holiday mates, on an expedition of discovery up his native river. But, supposing all these conjectures to be false, you cannot contest the inestimable benefit which I shall confer on all mankind to the last generation, by discovering a passage near the pole to those countries, to reach which at present so many months are requisite; or by ascertaining the secret of the magnet, which, if at all possible, can only be effected by an undertaking such as mine.\n\nThese reflections have dispelled the agitation with which I began my letter, and I feel my heart glow with an enthusiasm which elevates me to heaven; for nothing contributes so much to tranquillize the mind as a steady purpose,—a point on which the soul may fix its intellectual eye. This expedition has been the favourite dream of my early years. I have read with ardour the accounts of the various voyages which have been made in the prospect of arriving at the North Pacific Ocean through the seas which surround the pole. You may remember, that a history of all the voyages made for purposes of discovery composed the whole of our good uncle Thomas’s library. My education was neglected, yet I was passionately fond of reading. These volumes were my study day and night, and my familiarity with them increased that regret which I had felt, as a child, on learning that my father’s dying injunction had forbidden my uncle to allow me to embark in a sea-faring life.",
       "wordCount": 608,
       "sha256": "b530c9a8b7502357b0a0a159b7494fab2fe028707c70e86d911e6681e4035112",
-      "upstreamSha256": "54b2faba2485a5697606ecd0e4afb574e14bab51820bef4efa72ce8c91eff787"
+      "upstreamSha256": "54b2faba2485a5697606ecd0e4afb574e14bab51820bef4efa72ce8c91eff787",
+      "collectionId": "austen"
+    },
+    {
+      "id": "austen-fragment",
+      "title": "Emma · opening sentence",
+      "year": 1815,
+      "edition": "English text, volume I, chapter I; first published December 1815, title page dated 1816",
+      "ebook": 158,
+      "authorId": "jane-austen",
+      "role": "short",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/158",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/158/pg158.txt",
+      "sourceNote": "Opening sentence(s) of the Emma holdout. Intentional overlap between two test cases; neither enters the baseline.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "Emma Woodhouse, handsome, clever, and rich, with a comfortable home and happy disposition, seemed to unite some of the best blessings of existence; and had lived nearly twenty-one years in the world with very little to distress or vex her.",
+      "wordCount": 41,
+      "sha256": "4c40b85c7fa3c3fe9aa0881d235d20f65b7f3a3feca409c3ddb29f746a37dd92",
+      "upstreamSha256": "532b122b4e6a76cc556d6fdcd729b5892f5c4ce4a1b7060b9f832adfad8680dc",
+      "derivedFrom": "austen-emma",
+      "collectionId": "austen"
     },
     {
       "id": "synthetic-social-scene",
@@ -198,6 +432,7 @@
       "edition": "Frozen AI-generated fixture v1",
       "ebook": null,
       "role": "synthetic",
+      "collectionId": "austen",
       "sourceUrl": null,
       "originalTextUrl": null,
       "sourceNote": "Generated by the implementation assistant for this demo. The exact model identifier is not available. No runtime inference service is called.",
@@ -216,22 +451,274 @@
       "upstreamSha256": null
     },
     {
-      "id": "austen-fragment",
-      "authorId": "jane-austen",
-      "title": "Emma · opening sentence",
-      "year": 1815,
-      "edition": "English text, volume I, chapter I; first published December 1815, title page dated 1816",
-      "ebook": 158,
-      "role": "short",
-      "sourceUrl": "https://www.gutenberg.org/ebooks/158",
-      "originalTextUrl": "https://www.gutenberg.org/cache/epub/158/pg158.txt",
-      "sourceNote": "First paragraph of the Emma holdout. Intentional overlap between two test cases; neither enters the baseline.",
+      "id": "mill-liberty",
+      "title": "On Liberty",
+      "year": 1859,
+      "edition": "English text, chapter I",
+      "ebook": 34901,
+      "authorId": "john-stuart-mill",
+      "role": "baseline",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/34901",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/34901/pg34901.txt",
+      "sourceNote": "Opening 2 paragraphs of the specified section. Only whitespace reflowed; spelling, punctuation, and emphasis markers retained. No introductory/editorial material included.",
       "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
-      "text": "Emma Woodhouse, handsome, clever, and rich, with a comfortable home and happy disposition, seemed to unite some of the best blessings of existence; and had lived nearly twenty-one years in the world with very little to distress or vex her.",
-      "wordCount": 41,
-      "sha256": "4c40b85c7fa3c3fe9aa0881d235d20f65b7f3a3feca409c3ddb29f746a37dd92",
-      "upstreamSha256": "532b122b4e6a76cc556d6fdcd729b5892f5c4ce4a1b7060b9f832adfad8680dc",
-      "derivedFrom": "austen-emma"
+      "text": "The subject of this Essay is not the so-called Liberty of the Will, so unfortunately opposed to the misnamed doctrine of Philosophical Necessity; but Civil, or Social Liberty: the nature and limits of the power which can be legitimately exercised by society over the individual. A question seldom stated, and hardly ever discussed, in general terms, but which profoundly influences the practical controversies of the age by its latent presence, and is likely soon to make itself recognised as the vital question of the future. It is so far from being new, that in a certain sense, it has divided mankind, almost from the remotest ages; but in the stage of progress into which the more civilised portions of the species have now entered, it presents itself under new conditions, and requires a different and more fundamental treatment.\n\nThe struggle between Liberty and Authority is the most conspicuous feature in the portions of history with which we are earliest familiar, particularly in that of Greece, Rome, and England. But in old times this contest was between subjects, or some classes of subjects, and the government. By liberty, was meant protection against the tyranny of the political rulers. The rulers were conceived (except in some of the popular governments of Greece) as in a necessarily antagonistic position to the people whom they ruled. They consisted of a governing One, or a governing tribe or caste, who derived their authority from inheritance or conquest, who, at all events, did not hold it at the pleasure of the governed, and whose supremacy men did not venture, perhaps did not desire, to contest, whatever precautions might be taken against its oppressive exercise. Their power was regarded as necessary, but also as highly dangerous; as a weapon which they would attempt to use against their subjects, no less than against external enemies. To prevent the weaker members of the community from being preyed upon by innumerable vultures, it was needful that there should be an animal of prey stronger than the rest, commissioned to keep them down. But as the king of the vultures would be no less bent upon preying on the flock than any of the minor harpies, it was indispensable to be in a perpetual attitude of defence against his beak and claws. The aim, therefore, of patriots, was to set limits to the power which the ruler should be suffered to exercise over the community; and this limitation was what they meant by liberty. It was attempted in two ways. First, by obtaining a recognition of certain immunities, called political liberties or rights, which it was to be regarded as a breach of duty in the ruler to infringe, and which if he did infringe, specific resistance, or general rebellion, was held to be justifiable. A second, and generally a later expedient, was the establishment of constitutional checks; by which the consent of the community, or of a body of some sort, supposed to represent its interests, was made a necessary condition to some of the more important acts of the governing power. To the first of these modes of limitation, the ruling power, in most European countries, was compelled, more or less, to submit. It was not so with the second; and to attain this, or when already in some degree possessed, to attain it more completely, became everywhere the principal object of the lovers of liberty. And so long as mankind were content to combat one enemy by another, and to be ruled by a master, on condition of being guaranteed more or less efficaciously against his tyranny, they did not carry their aspirations beyond this point.",
+      "wordCount": 609,
+      "sha256": "f75d193635d656caa9f9f50c3db397c72dc175b2990f26259310bfec72ed4a46",
+      "upstreamSha256": "fad90451253e40190995748ed5d5b60b48b0881cd1a37fa705e471bc628b36ca",
+      "collectionId": "mill"
+    },
+    {
+      "id": "mill-utilitarianism",
+      "title": "Utilitarianism",
+      "year": 1863,
+      "edition": "English text, chapter I",
+      "ebook": 11224,
+      "authorId": "john-stuart-mill",
+      "role": "baseline",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/11224",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/11224/pg11224.txt",
+      "sourceNote": "Opening 2 paragraphs of the specified section. Only whitespace reflowed; spelling, punctuation, and emphasis markers retained. No introductory/editorial material included.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "There are few circumstances among those which make up the present condition of human knowledge, more unlike what might have been expected, or more significant of the backward state in which speculation on the most important subjects still lingers, than the little progress which has been made in the decision of the controversy respecting the criterion of right and wrong. From the dawn of philosophy, the question concerning the _summum bonum_, or, what is the same thing, concerning the foundation of morality, has been accounted the main problem in speculative thought, has occupied the most gifted intellects, and divided them into sects and schools, carrying on a vigorous warfare against one another. And after more than two thousand years the same discussions continue, philosophers are still ranged under the same contending banners, and neither thinkers nor mankind at large seem nearer to being unanimous on the subject, than when the youth Socrates listened to the old Protagoras, and asserted (if Plato's dialogue be grounded on a real conversation) the theory of utilitarianism against the popular morality of the so-called sophist.\n\nIt is true that similar confusion and uncertainty, and in some cases similar discordance, exist respecting the first principles of all the sciences, not excepting that which is deemed the most certain of them, mathematics; without much impairing, generally indeed without impairing at all, the trustworthiness of the conclusions of those sciences. An apparent anomaly, the explanation of which is, that the detailed doctrines of a science are not usually deduced from, nor depend for their evidence upon, what are called its first principles. Were it not so, there would be no science more precarious, or whose conclusions were more insufficiently made out, than algebra; which derives none of its certainty from what are commonly taught to learners as its elements, since these, as laid down by some of its most eminent teachers, are as full of fictions as English law, and of mysteries as theology. The truths which are ultimately accepted as the first principles of a science, are really the last results of metaphysical analysis, practised on the elementary notions with which the science is conversant; and their relation to the science is not that of foundations to an edifice, but of roots to a tree, which may perform their office equally well though they be never dug down to and exposed to light. But though in science the particular truths precede the general theory, the contrary might be expected to be the case with a practical art, such as morals or legislation. All action is for the sake of some end, and rules of action, it seems natural to suppose, must take their whole character and colour from the end to which they are subservient. When we engage in a pursuit, a clear and precise conception of what we are pursuing would seem to be the first thing we need, instead of the last we are to look forward to. A test of right and wrong must be the means, one would think, of ascertaining what is right or wrong, and not a consequence of having already ascertained it.",
+      "wordCount": 523,
+      "sha256": "e460f4e38b156198c76f3b27893b08307c1690a1779b29ce30a6401ea8f6f166",
+      "upstreamSha256": "2b2e413b8df7d42790546a6c636802f10da3ee472cc94a85d3e12204b6385241",
+      "collectionId": "mill"
+    },
+    {
+      "id": "mill-subjection",
+      "title": "The Subjection of Women",
+      "year": 1869,
+      "edition": "English text, chapter I",
+      "ebook": 27083,
+      "authorId": "john-stuart-mill",
+      "role": "baseline",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/27083",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/27083/pg27083.txt",
+      "sourceNote": "Opening 2 paragraphs of the specified section. Only whitespace reflowed; spelling, punctuation, and emphasis markers retained. No introductory/editorial material included.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "The object of this Essay is to explain as clearly as I am able, the grounds of an opinion which I have held from the very earliest period when I had formed any opinions at all on social or political matters, and which, instead of being weakened or modified, has been constantly growing stronger by the progress of reflection and the experience of life: That the principle which regulates the existing social relations between the two sexes--the legal subordination of one sex to the other--is wrong in itself, and now one of the chief hindrances to human improvement; and that it ought to be replaced by a principle of perfect equality, admitting no power or privilege on the one side, nor disability on the other.\n\nThe very words necessary to express the task I have undertaken, show how arduous it is. But it would be a mistake to suppose that the difficulty of the case must lie in the insufficiency or obscurity of the grounds of reason on which my conviction rests. The difficulty is that which exists in all cases in which there is a mass of feeling to be contended against. So long as an opinion is strongly rooted in the feelings, it gains rather than loses in stability by having a preponderating weight of argument against it. For if it were accepted as a result of argument, the refutation of the argument might shake the solidity of the conviction; but when it rests solely on feeling, the worse it fares in argumentative contest, the more persuaded its adherents are that their feeling must have some deeper ground, which the arguments do not reach; and while the feeling remains, it is always throwing up fresh intrenchments of argument to repair any breach made in the old. And there are so many causes tending to make the feelings connected with this subject the most intense and most deeply-rooted of all those which gather round and protect old institutions and customs, that we need not wonder to find them as yet less undermined and loosened than any of the rest by the progress of the great modern spiritual and social transition; nor suppose that the barbarisms to which men cling longest must be less barbarisms than those which they earlier shake off.",
+      "wordCount": 385,
+      "sha256": "f8f520feed8507b4c84d055a03b6892dd9393f6c6b1896d5621c08aaea539e27",
+      "upstreamSha256": "ed7238e072be4c3c4a0478c725d6d1b27698b786c0b46958e501a679fd605319",
+      "collectionId": "mill"
+    },
+    {
+      "id": "mill-autobiography",
+      "title": "Autobiography",
+      "year": 1873,
+      "edition": "English text, chapter I; published posthumously",
+      "ebook": 10378,
+      "authorId": "john-stuart-mill",
+      "role": "holdout",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/10378",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/10378/pg10378.txt",
+      "sourceNote": "Opening 2 paragraphs of the specified section. Only whitespace reflowed; spelling, punctuation, and emphasis markers retained. No introductory/editorial material included.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "It seems proper that I should prefix to the following biographical sketch some mention of the reasons which have made me think it desirable that I should leave behind me such a memorial of so uneventful a life as mine. I do not for a moment imagine that any part of what I have to relate can be interesting to the public as a narrative or as being connected with myself. But I have thought that in an age in which education and its improvement are the subject of more, if not of profounder, study than at any former period of English history, it may be useful that there should be some record of an education which was unusual and remarkable, and which, whatever else it may have done, has proved how much more than is commonly supposed may be taught, and well taught, in those early years which, in the common modes of what is called instruction, are little better than wasted. It has also seemed to me that in an age of transition in opinions, there may be somewhat both of interest and of benefit in noting the successive phases of any mind which was always pressing forward, equally ready to learn and to unlearn either from its own thoughts or from those of others. But a motive which weighs more with me than either of these, is a desire to make acknowledgment of the debts which my intellectual and moral development owes to other persons; some of them of recognised eminence, others less known than they deserve to be, and the one to whom most of all is due, one whom the world had no opportunity of knowing. The reader whom these things do not interest, has only himself to blame if he reads farther, and I do not desire any other indulgence from him than that of bearing in mind that for him these pages were not written.\n\nI was born in London, on the 20th of May, 1806, and was the eldest son of James Mill, the author of the _History of British India_. My father, the son of a petty tradesman and (I believe) small farmer, at Northwater Bridge, in the county of Angus, was, when a boy, recommended by his abilities to the notice of Sir John Stuart, of Fettercairn, one of the Barons of the Exchequer in Scotland, and was, in consequence, sent to the University of Edinburgh, at the expense of a fund established by Lady Jane Stuart (the wife of Sir John Stuart) and some other ladies for educating young men for the Scottish Church. He there went through the usual course of study, and was licensed as a Preacher, but never followed the profession; having satisfied himself that he could not believe the doctrines of that or any other Church. For a few years he was a private tutor in various families in Scotland, among others that of the Marquis of Tweeddale, but ended by taking up his residence in London, and devoting himself to authorship. Nor had he any other means of support until 1819, when he obtained an appointment in the India House.",
+      "wordCount": 526,
+      "sha256": "abd95397255edd56521f3a102edd88a43ca5ad24619f866b4518144beb28fe50",
+      "upstreamSha256": "72b2a7f2c35062e524fe6a01d9bed58eef471c389c7d3701b11cdf1345866564",
+      "collectionId": "mill"
+    },
+    {
+      "id": "james-pragmatism",
+      "title": "Pragmatism",
+      "year": 1907,
+      "edition": "English text, lecture I",
+      "ebook": 5116,
+      "authorId": "william-james",
+      "role": "other-human",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/5116",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/5116/pg5116.txt",
+      "sourceNote": "Opening 5 paragraphs of the specified section. Only whitespace reflowed; spelling, punctuation, and emphasis markers retained. No introductory/editorial material included.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "In the preface to that admirable collection of essays of his called 'Heretics,' Mr. Chesterton writes these words: \"There are some people--and I am one of them--who think that the most practical and important thing about a man is still his view of the universe. We think that for a landlady considering a lodger, it is important to know his income, but still more important to know his philosophy. We think that for a general about to fight an enemy, it is important to know the enemy's numbers, but still more important to know the enemy's philosophy. We think the question is not whether the theory of the cosmos affects matters, but whether, in the long run, anything else affects them.\"\n\nI think with Mr. Chesterton in this matter. I know that you, ladies and gentlemen, have a philosophy, each and all of you, and that the most interesting and important thing about you is the way in which it determines the perspective in your several worlds. You know the same of me. And yet I confess to a certain tremor at the audacity of the enterprise which I am about to begin. For the philosophy which is so important in each of us is not a technical matter; it is our more or less dumb sense of what life honestly and deeply means. It is only partly got from books; it is our individual way of just seeing and feeling the total push and pressure of the cosmos. I have no right to assume that many of you are students of the cosmos in the class-room sense, yet here I stand desirous of interesting you in a philosophy which to no small extent has to be technically treated. I wish to fill you with sympathy with a contemporaneous tendency in which I profoundly believe, and yet I have to talk like a professor to you who are not students. Whatever universe a professor believes in must at any rate be a universe that lends itself to lengthy discourse. A universe definable in two sentences is something for which the professorial intellect has no use. No faith in anything of that cheap kind! I have heard friends and colleagues try to popularize philosophy in this very hall, but they soon grew dry, and then technical, and the results were only partially encouraging. So my enterprise is a bold one. The founder of pragmatism himself recently gave a course of lectures at the Lowell Institute with that very word in its title-flashes of brilliant light relieved against Cimmerian darkness! None of us, I fancy, understood ALL that he said--yet here I stand, making a very similar venture.\n\nI risk it because the very lectures I speak of DREW--they brought good audiences. There is, it must be confessed, a curious fascination in hearing deep things talked about, even tho neither we nor the disputants understand them. We get the problematic thrill, we feel the presence of the vastness. Let a controversy begin in a smoking-room anywhere, about free-will or God's omniscience, or good and evil, and see how everyone in the place pricks up his ears. Philosophy's results concern us all most vitally, and philosophy's queerest arguments tickle agreeably our sense of subtlety and ingenuity.\n\nBelieving in philosophy myself devoutly, and believing also that a kind of new dawn is breaking upon us philosophers, I feel impelled, per fas aut nefas, to try to impart to you some news of the situation.\n\nPhilosophy is at once the most sublime and the most trivial of human pursuits. It works in the minutest crannies and it opens out the widest vistas. It 'bakes no bread,' as has been said, but it can inspire our souls with courage; and repugnant as its manners, its doubting and challenging, its quibbling and dialectics, often are to common people, no one of us can get along without the far-flashing beams of light it sends over the world's perspectives. These illuminations at least, and the contrast-effects of darkness and mystery that accompany them, give to what it says an interest that is much more than professional.",
+      "wordCount": 697,
+      "sha256": "1d1f02618100d664960178738616af136d83f2e3f4b70089eb4680918f244e16",
+      "upstreamSha256": "92c8654ebc3052887740ab0ce8cd953456f63ba3f7749d31377488d807765db6",
+      "collectionId": "mill"
+    },
+    {
+      "id": "mill-fragment",
+      "title": "Autobiography · opening sentence",
+      "year": 1873,
+      "edition": "English text, chapter I; published posthumously",
+      "ebook": 10378,
+      "authorId": "john-stuart-mill",
+      "role": "short",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/10378",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/10378/pg10378.txt",
+      "sourceNote": "Opening sentence(s) of the Autobiography holdout. Intentional overlap between two test cases; neither enters the baseline.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "It seems proper that I should prefix to the following biographical sketch some mention of the reasons which have made me think it desirable that I should leave behind me such a memorial of so uneventful a life as mine.",
+      "wordCount": 40,
+      "sha256": "4b4c08f0c274f48db95704a9fd5d3cb7fe52e60b4a0fe820256244976ebadc26",
+      "upstreamSha256": "72b2a7f2c35062e524fe6a01d9bed58eef471c389c7d3701b11cdf1345866564",
+      "derivedFrom": "mill-autobiography",
+      "collectionId": "mill"
+    },
+    {
+      "id": "synthetic-liberty-essay",
+      "authorId": "synthetic-ai",
+      "title": "On the limits of persuasion",
+      "year": null,
+      "edition": "Frozen AI-generated fixture v1",
+      "ebook": null,
+      "role": "synthetic",
+      "collectionId": "mill",
+      "sourceUrl": null,
+      "originalTextUrl": null,
+      "sourceNote": "Generated by the implementation assistant for this demo. The exact model identifier is not available. No runtime inference service is called.",
+      "rights": "New synthetic text supplied with this demo; not a historical public-domain source or an archived human sample.",
+      "generationPrompt": "Write about 250 words of original, modern English prose arguing about individual liberty, public opinion, and the general welfare. Use neutral explanatory language. Do not quote an existing book or imitate a named author.",
+      "generator": {
+        "kind": "AI",
+        "name": "Implementation assistant",
+        "model": null,
+        "seed": null,
+        "reproducibility": "Frozen output and SHA-256 hash, not reproducible model sampling."
+      },
+      "text": "Most people agree that a society should protect the freedom of its members, but they disagree about what that protection requires. One view holds that freedom is mainly a matter of law: as long as no statute forbids an action, the person who performs it is free. Another view argues that social pressure can restrict behavior as effectively as any law. A person who fears ridicule or exclusion may abandon a belief without ever being formally prohibited from holding it.\n\nThis second concern deserves careful attention. When a majority shares an opinion, it rarely needs to compel agreement. Disagreement simply becomes costly, and many individuals conclude that silence is the safer choice. The result is a community that appears unanimous while actually containing a wide range of private doubts. Such a community loses the benefit of open disagreement, which is the main way that errors are discovered and corrected.\n\nIt does not follow that every form of social influence is harmful. Praise, criticism, and example are ordinary parts of living together, and no one could reasonably demand to be free from them. The relevant question is whether a particular pressure aims to persuade or to punish. Persuasion offers reasons and leaves the decision with the listener. Punishment removes the decision by attaching penalties to one of the answers.\n\nA useful test, then, is to ask what happens to the person who declines to be convinced. If the consequence is only continued disagreement, liberty remains intact. If the consequence is loss of standing, employment, or safety, the pressure has become coercion, whatever name it is given. Protecting the general welfare includes protecting the conditions under which people can change their minds freely.",
+      "wordCount": 281,
+      "sha256": "fcabaf29263cf3e106ff4c9694d3d243fa2e7f8db66c26ab5b0f79c64b14c129",
+      "upstreamSha256": null
+    },
+    {
+      "id": "darwin-beagle",
+      "title": "The Voyage of the Beagle",
+      "year": 1839,
+      "edition": "English text, chapter XIII (Chiloe)",
+      "ebook": 944,
+      "authorId": "charles-darwin",
+      "role": "baseline",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/944",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/944/pg944.txt",
+      "sourceNote": "Opening 2 paragraphs of the specified section. Only whitespace reflowed; spelling, punctuation, and emphasis markers retained. No introductory/editorial material included.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "This island is about ninety miles long, with a breadth of rather less than thirty. The land is hilly, but not mountainous, and is covered by one great forest, except where a few green patches have been cleared round the thatched cottages. From a distance the view somewhat resembles that of Tierra del Fuego; but the woods, when seen nearer, are incomparably more beautiful. Many kinds of fine evergreen trees, and plants with a tropical character, here take the place of the gloomy beech of the southern shores. In winter the climate is detestable, and in summer it is only a little better. I should think there are few parts of the world, within the temperate regions, where so much rain falls. The winds are very boisterous, and the sky almost always clouded: to have a week of fine weather is something wonderful. It is even difficult to get a single glimpse of the Cordillera: during our first visit, once only the volcano of Osorno stood out in bold relief, and that was before sunrise; it was curious to watch, as the sun rose, the outline gradually fading away in the glare of the eastern sky.\n\nThe inhabitants, from their complexion and low stature; appear to have three-fourths of Indian blood in their veins. They are an humble, quiet, industrious set of men. Although the fertile soil, resulting from the decomposition of the volcanic rocks, supports a rank vegetation, yet the climate is not favourable to any production which requires much sunshine to ripen it. There is very little pasture for the larger quadrupeds; and in consequence, the staple articles of food are pigs, potatoes, and fish. The people all dress in strong woollen garments, which each family makes for itself, and dyes with indigo of a dark blue colour. The arts, however, are in the rudest state;--as may be seen in their strange fashion of ploughing, their method of spinning, grinding corn, and in the construction of their boats. The forests are so impenetrable, that the land is nowhere cultivated except near the coast and on the adjoining islets. Even where paths exist, they are scarcely passable from the soft and swampy state of the soil. The inhabitants, like those of Tierra del Fuego, move about chiefly on the beach or in boats. Although with plenty to eat, the people are very poor: there is no demand for labour, and consequently the lower orders cannot scrape together money sufficient to purchase even the smallest luxuries. There is also a great deficiency of a circulating medium. I have seen a man bringing on his back a bag of charcoal, with which to buy some trifle, and another carrying a plank to exchange for a bottle of wine. Hence every tradesman must also be a merchant, and again sell the goods which he takes in exchange.",
+      "wordCount": 477,
+      "sha256": "8f4940d2fda92d42f390f9633db5668c68d6c61b9f3df7132c8886c96bd45841",
+      "upstreamSha256": "e13d57170a6dd9f7d97ddbc14cbde961dffbd95e8861ed199e5f00a525e7e52a",
+      "collectionId": "darwin"
+    },
+    {
+      "id": "darwin-origin",
+      "title": "On the Origin of Species",
+      "year": 1859,
+      "edition": "English text, introduction; first edition",
+      "ebook": 1228,
+      "authorId": "charles-darwin",
+      "role": "baseline",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/1228",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/1228/pg1228.txt",
+      "sourceNote": "Opening 3 paragraphs of the specified section. Only whitespace reflowed; spelling, punctuation, and emphasis markers retained. No introductory/editorial material included.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "When on board H.M.S. ‘Beagle,’ as naturalist, I was much struck with certain facts in the distribution of the inhabitants of South America, and in the geological relations of the present to the past inhabitants of that continent. These facts seemed to me to throw some light on the origin of species—that mystery of mysteries, as it has been called by one of our greatest philosophers. On my return home, it occurred to me, in 1837, that something might perhaps be made out on this question by patiently accumulating and reflecting on all sorts of facts which could possibly have any bearing on it. After five years’ work I allowed myself to speculate on the subject, and drew up some short notes; these I enlarged in 1844 into a sketch of the conclusions, which then seemed to me probable: from that period to the present day I have steadily pursued the same object. I hope that I may be excused for entering on these personal details, as I give them to show that I have not been hasty in coming to a decision.\n\nMy work is now nearly finished; but as it will take me two or three more years to complete it, and as my health is far from strong, I have been urged to publish this Abstract. I have more especially been induced to do this, as Mr. Wallace, who is now studying the natural history of the Malay archipelago, has arrived at almost exactly the same general conclusions that I have on the origin of species. Last year he sent to me a memoir on this subject, with a request that I would forward it to Sir Charles Lyell, who sent it to the Linnean Society, and it is published in the third volume of the Journal of that Society. Sir C. Lyell and Dr. Hooker, who both knew of my work—the latter having read my sketch of 1844—honoured me by thinking it advisable to publish, with Mr. Wallace’s excellent memoir, some brief extracts from my manuscripts.\n\nThis Abstract, which I now publish, must necessarily be imperfect. I cannot here give references and authorities for my several statements; and I must trust to the reader reposing some confidence in my accuracy. No doubt errors will have crept in, though I hope I have always been cautious in trusting to good authorities alone. I can here give only the general conclusions at which I have arrived, with a few facts in illustration, but which, I hope, in most cases will suffice. No one can feel more sensible than I do of the necessity of hereafter publishing in detail all the facts, with references, on which my conclusions have been grounded; and I hope in a future work to do this. For I am well aware that scarcely a single point is discussed in this volume on which facts cannot be adduced, often apparently leading to conclusions directly opposite to those at which I have arrived. A fair result can be obtained only by fully stating and balancing the facts and arguments on both sides of each question; and this cannot possibly be here done.",
+      "wordCount": 531,
+      "sha256": "2c51c1777c81650756f337f928c010b9bb062dbf06b130a1c7bdad33986a4007",
+      "upstreamSha256": "ededa9c0bf8761efed092c303b46c1c92de956838cba6249a33bedfd6d7363b4",
+      "collectionId": "darwin"
+    },
+    {
+      "id": "darwin-descent",
+      "title": "The Descent of Man",
+      "year": 1871,
+      "edition": "English text, introduction",
+      "ebook": 2300,
+      "authorId": "charles-darwin",
+      "role": "baseline",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/2300",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/2300/pg2300.txt",
+      "sourceNote": "Opening 3 paragraphs of the specified section. Only whitespace reflowed; spelling, punctuation, and emphasis markers retained. No introductory/editorial material included.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "The nature of the following work will be best understood by a brief account of how it came to be written. During many years I collected notes on the origin or descent of man, without any intention of publishing on the subject, but rather with the determination not to publish, as I thought that I should thus only add to the prejudices against my views. It seemed to me sufficient to indicate, in the first edition of my ‘Origin of Species,’ that by this work “light would be thrown on the origin of man and his history;” and this implies that man must be included with other organic beings in any general conclusion respecting his manner of appearance on this earth. Now the case wears a wholly different aspect. When a naturalist like Carl Vogt ventures to say in his address as President of the National Institution of Geneva (1869), “personne, en Europe au moins, n’ose plus soutenir la creation indépendante et de toutes pièces, des espèces,” it is manifest that at least a large number of naturalists must admit that species are the modified descendants of other species; and this especially holds good with the younger and rising naturalists. The greater number accept the agency of natural selection; though some urge, whether with justice the future must decide, that I have greatly overrated its importance. Of the older and honoured chiefs in natural science, many unfortunately are still opposed to evolution in every form.\n\nIn consequence of the views now adopted by most naturalists, and which will ultimately, as in every other case, be followed by others who are not scientific, I have been led to put together my notes, so as to see how far the general conclusions arrived at in my former works were applicable to man. This seemed all the more desirable, as I had never deliberately applied these views to a species taken singly. When we confine our attention to any one form, we are deprived of the weighty arguments derived from the nature of the affinities which connect together whole groups of organisms—their geographical distribution in past and present times, and their geological succession. The homological structure, embryological development, and rudimentary organs of a species remain to be considered, whether it be man or any other animal, to which our attention may be directed; but these great classes of facts afford, as it appears to me, ample and conclusive evidence in favour of the principle of gradual evolution. The strong support derived from the other arguments should, however, always be kept before the mind.\n\nThe sole object of this work is to consider, firstly, whether man, like every other species, is descended from some pre-existing form; secondly, the manner of his development; and thirdly, the value of the differences between the so-called races of man. As I shall confine myself to these points, it will not be necessary to describe in detail the differences between the several races—an enormous subject which has been fully described in many valuable works. The high antiquity of man has recently been demonstrated by the labours of a host of eminent men, beginning with M. Boucher de Perthes; and this is the indispensable basis for understanding his origin. I shall, therefore, take this conclusion for granted, and may refer my readers to the admirable treatises of Sir Charles Lyell, Sir John Lubbock, and others. Nor shall I have occasion to do more than to allude to the amount of difference between man and the anthropomorphous apes; for Prof. Huxley, in the opinion of most competent judges, has conclusively shewn that in every visible character man differs less from the higher apes, than these do from the lower members of the same order of Primates.",
+      "wordCount": 629,
+      "sha256": "795dc0268c3b364464c4e1a1dab791427e9651c171e3817ab93b3160b2fcf087",
+      "upstreamSha256": "2911dfcc2b0b498fe92ad9bd7e2c712046edb448eb6fe3bd669bcf9629adf8fd",
+      "collectionId": "darwin"
+    },
+    {
+      "id": "darwin-worms",
+      "title": "The Formation of Vegetable Mould",
+      "year": 1881,
+      "edition": "English text, chapter I (Habits of worms)",
+      "ebook": 2355,
+      "authorId": "charles-darwin",
+      "role": "holdout",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/2355",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/2355/pg2355.txt",
+      "sourceNote": "Opening 2 paragraphs of the specified section. Only whitespace reflowed; spelling, punctuation, and emphasis markers retained. No introductory/editorial material included.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "EARTH-WORMS are distributed throughout the world under the form of a few genera, which externally are closely similar to one another. The British species of Lumbricus have never been carefully monographed; but we may judge of their probable number from those inhabiting neighbouring countries. In Scandinavia there are eight species, according to Eisen; {8a} but two of these rarely burrow in the ground, and one inhabits very wet places or even lives under the water. We are here concerned only with the kinds which bring up earth to the surface in the form of castings. Hoffmeister says that the species in Germany are not well known, but gives the same number as Eisen, together with some strongly marked varieties. {8b}\n\nEarth-worms abound in England in many different stations. Their castings may be seen in extraordinary numbers on commons and chalk-downs, so as almost to cover the whole surface, where the soil is poor and the grass short and thin. But they are almost or quite as numerous in some of the London parks, where the grass grows well and the soil appears rich. Even on the same field worms are much more frequent in some places than in others, without any visible difference in the nature of the soil. They abound in paved court-yards close to houses; and an instance will be given in which they had burrowed through the floor of a very damp cellar. I have seen worms in black peat in a boggy field; but they are extremely rare, or quite absent in the drier, brown, fibrous peat, which is so much valued by gardeners. On dry, sandy or gravelly tracks, where heath with some gorse, ferns, coarse grass, moss and lichens alone grow, hardly any worms can be found. But in many parts of England, wherever a path crosses a heath, its surface becomes covered with a fine short sward. Whether this change of vegetation is due to the taller plants being killed by the occasional trampling of man and animals, or to the soil being occasionally manured by the droppings from animals, I do not know. {9b} On such grassy paths worm-castings may often be seen. On a heath in Surrey, which was carefully examined, there were only a few castings on these paths, where they were much inclined; but on the more level parts, where a bed of fine earth had been washed down from the steeper parts and had accumulated to a thickness of a few inches, worm-castings abounded. These spots seemed to be overstocked with worms, so that they had been compelled to spread to a distance of a few feet from the grassy paths, and here their castings had been thrown up among the heath; but beyond this limit, not a single casting could be found. A layer, though a thin one, of fine earth, which probably long retains some moisture, is in all cases, as I believe, necessary for their existence; and the mere compression of the soil appears to be in some degree favourable to them, for they often abound in old gravel walks, and in foot-paths across fields.",
+      "wordCount": 527,
+      "sha256": "5170c1174aaf6dc2dbd4f35e9b83ea901edaf8fab3b20afb0341b824d2a35131",
+      "upstreamSha256": "115914ee8113bb065f9a8b95c76c1b6e6eeda32a8c85f398d0c6d3cea7f53258",
+      "collectionId": "darwin"
+    },
+    {
+      "id": "wallace-malay",
+      "title": "The Malay Archipelago",
+      "year": 1869,
+      "edition": "English text, volume I, chapter I",
+      "ebook": 2530,
+      "authorId": "alfred-russel-wallace",
+      "role": "other-human",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/2530",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/2530/pg2530.txt",
+      "sourceNote": "Opening 3 paragraphs of the specified section. Only whitespace reflowed; spelling, punctuation, and emphasis markers retained. No introductory/editorial material included.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "From a look at a globe or a map of the Eastern hemisphere, we shall perceive between Asia and Australia a number of large and small islands forming a connected group distinct from those great masses of land, and having little connection with either of them. Situated upon the Equator, and bathed by the tepid water of the great tropical oceans, this region enjoys a climate more uniformly hot and moist than almost any other part of the globe, and teems with natural productions which are elsewhere unknown. The richest of fruits and the most precious of spices are Indigenous here. It produces the giant flowers of the Rafflesia, the great green-winged Ornithoptera (princes among the butterfly tribes), the man-like Orangutan, and the gorgeous Birds of Paradise. It is inhabited by a peculiar and interesting race of mankind--the Malay, found nowhere beyond the limits of this insular tract, which has hence been named the Malay Archipelago.\n\nTo the ordinary Englishman this is perhaps the least known part of the globe. Our possessions in it are few and scanty; scarcely any of our travellers go to explore it; and in many collections of maps it is almost ignored, being divided between Asia and the Pacific Islands. It thus happens that few persons realize that, as a whole, it is comparable with the primary divisions of the globe, and that some of its separate islands are larger than France or the Austrian Empire. The traveller, however, soon acquires different ideas. He sails for days or even weeks along the shores of one of these great islands, often so great that its inhabitants believe it to be a vast continent. He finds that voyages among these islands are commonly reckoned by weeks and months, and that their several inhabitants are often as little known to each other as are the native races of the northern to those of the southern continent of America. He soon comes to look upon this region as one apart from the rest of the world, with its own races of men and its own aspects of nature; with its own ideas, feelings, customs, and modes of speech, and with a climate, vegetation, and animated life altogether peculiar to itself.\n\nFrom many points of view these islands form one compact geographical whole, and as such they have always been treated by travellers and men of science; but, a more careful and detailed study of them under various aspects reveals the unexpected fact that they are divisible into two portions nearly equal in extent which differ widely in their natural products, and really form two parts of the primary divisions of the earth. I have been able to prove this in considerable detail by my observations on the natural history of the various parts of the Archipelago; and, as in the description of my travels and residence in the several islands I shall have to refer continually to this view, and adduce facts in support of it, I have thought it advisable to commence with a general sketch of the main features of the Malayan region as will render the facts hereafter brought forward more interesting, and their bearing upon the general question more easily understood. I proceed, therefore, to sketch the limits and extent of the Archipelago, and to point out the more striking features of its geology, physical geography, vegetation, and animal life.",
+      "wordCount": 568,
+      "sha256": "2eb1c2f05119af38fdf09acdeac178354696e9e782cc7364277d1aa8afb4e8bd",
+      "upstreamSha256": "d4b343bde8af87ea34810f86d64743f0d75de78617ab12fe95e04157a7efa206",
+      "collectionId": "darwin"
+    },
+    {
+      "id": "darwin-fragment",
+      "title": "Vegetable Mould · opening sentence",
+      "year": 1881,
+      "edition": "English text, chapter I (Habits of worms)",
+      "ebook": 2355,
+      "authorId": "charles-darwin",
+      "role": "short",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/2355",
+      "originalTextUrl": "https://www.gutenberg.org/cache/epub/2355/pg2355.txt",
+      "sourceNote": "Opening sentence(s) of the The Formation of Vegetable Mould holdout. Intentional overlap between two test cases; neither enters the baseline.",
+      "rights": "Public domain in the USA; check local law elsewhere. Original English text, not a modern translation.",
+      "text": "EARTH-WORMS are distributed throughout the world under the form of a few genera, which externally are closely similar to one another. The British species of Lumbricus have never been carefully monographed; but we may judge of their probable number from those inhabiting neighbouring countries.",
+      "wordCount": 45,
+      "sha256": "31e0d11d02642cfb11587e250c7dae3d07776d149fc571cdd13e158a6ee3a2ba",
+      "upstreamSha256": "115914ee8113bb065f9a8b95c76c1b6e6eeda32a8c85f398d0c6d3cea7f53258",
+      "derivedFrom": "darwin-worms",
+      "collectionId": "darwin"
+    },
+    {
+      "id": "synthetic-garden-notes",
+      "authorId": "synthetic-ai",
+      "title": "Notes from a garden plot",
+      "year": null,
+      "edition": "Frozen AI-generated fixture v1",
+      "ebook": null,
+      "role": "synthetic",
+      "collectionId": "darwin",
+      "sourceUrl": null,
+      "originalTextUrl": null,
+      "sourceNote": "Generated by the implementation assistant for this demo. The exact model identifier is not available. No runtime inference service is called.",
+      "rights": "New synthetic text supplied with this demo; not a historical public-domain source or an archived human sample.",
+      "generationPrompt": "Write about 250 words of original, modern English prose in which an amateur observer records variation among plants in a garden and reasons carefully about its causes. Use neutral explanatory language. Do not quote an existing book or imitate a named author.",
+      "generator": {
+        "kind": "AI",
+        "name": "Implementation assistant",
+        "model": null,
+        "seed": null,
+        "reproducibility": "Frozen output and SHA-256 hash, not reproducible model sampling."
+      },
+      "text": "Over three summers I kept a record of the bean plants growing along the south wall of a small garden. The seeds came from the same packet each year, and the soil was prepared in the same way, yet the plants never looked alike. Some climbed quickly and produced few pods. Others stayed short and set pods early. A few showed leaves with a faint purple edge that none of their neighbors shared.\n\nAt first I assumed that the differences came entirely from position. Plants nearer the wall received more reflected heat, and plants at the ends of the row had less competition for light. Those factors clearly mattered, but they did not explain everything. When I moved seedlings between positions in the second year, several kept the habits they had shown before the move. The purple-edged leaves, in particular, appeared again in the same family of plants regardless of where they stood.\n\nThis suggested that part of the variation was inherited rather than caused by the surroundings. To test the idea, I saved seed only from the earliest podding plants and sowed it in the third year. The new generation set pods, on average, about a week sooner than the original packet. The change was small, and I cannot rule out a difference in the weather, but the direction was consistent with selection.\n\nI do not claim that a garden plot settles any large question. It does show that careful records, repeated across seasons, can separate the effects of place from the effects of descent. The habit of writing down what one actually sees, rather than what one expects, is the most useful tool an observer has.",
+      "wordCount": 279,
+      "sha256": "96902fd2aa82af3810f69801bcc8c189c39af49df4b3becb65944b64548236ff",
+      "upstreamSha256": null
     }
   ]
 }
