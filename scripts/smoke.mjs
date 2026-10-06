@@ -71,7 +71,10 @@ try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, ignoreHTTPSErrors });
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
+  // The workspace fetches its data after mount; wait for it before interacting.
+  const ready = target => target.locator('main[data-ready="true"]').waitFor({ timeout: 20000 });
   await page.goto(baseURL, { waitUntil: "load" });
+  await ready(page);
   await expect(page.getByRole("heading", { name: "Your authorship, at a glance." })).toBeVisible();
   await page.getByRole("link", { name: "My submissions" }).click();
   await page.getByRole("textbox", { name: "Search submissions" }).fill("ethics");
@@ -117,6 +120,7 @@ try {
   await consentToggle.click();
   await expect(consentToggle).toHaveAttribute("aria-checked", "false");
   await page.reload({ waitUntil: "load" });
+  await ready(page);
   await expect(page.getByRole("switch", { name: "Enable authorship verification" })).toHaveAttribute("aria-checked", "false");
   assert.deepEqual(errors, [], "no browser runtime errors");
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
@@ -124,6 +128,7 @@ try {
 
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, ignoreHTTPSErrors });
   await mobile.goto(baseURL, { waitUntil: "load" });
+  await ready(mobile);
   await mobile.getByRole("button", { name: "Open navigation" }).click();
   await mobile.getByRole("link", { name: "Writing profile", exact: true }).click();
   await expect(mobile.getByRole("heading", { name: "A voice that’s uniquely yours." })).toBeVisible();
