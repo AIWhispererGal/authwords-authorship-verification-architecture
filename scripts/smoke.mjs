@@ -103,9 +103,13 @@ try {
   await expect(page.locator(".prompt-pane")).toHaveCount(1);
   await page.goto(`${baseURL}/?view=flip`, { waitUntil: "load" });
   await expect(page.getByRole("heading", { name: "Make the shortcut the lesson." })).toBeVisible();
+  // A full page load: wait for hydration and data before clicking, or the link becomes a real navigation.
+  await ready(page);
   await page.getByRole("link", { name: "Overview", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Your authorship, at a glance." })).toBeVisible();
+  await ready(page);
   await page.getByRole("button", { name: "Verify new work" }).click();
+  await expect(page.getByRole("dialog")).toBeVisible({ timeout: 15000 });
   await page.getByRole("button", { name: "Use a sample" }).click();
   await page.getByRole("checkbox").check();
   const metricsRequest = page.waitForRequest(req => req.url().endsWith("/api/submissions") && req.method() === "POST");
