@@ -9,7 +9,8 @@ let instance: NodePgDatabase | undefined = process.env.NODE_ENV === "production"
 
 function connect(): NodePgDatabase {
   if (instance) return instance;
-  const databaseUrl = process.env.DATABASE_URL;
+  // Hosts such as Netlify DB expose the connection string under their own name.
+  const databaseUrl = process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL;
   if (!databaseUrl) throw new Error("DATABASE_URL is required");
   instance = drizzle(new Pool({ connectionString: databaseUrl }));
   if (process.env.NODE_ENV !== "production") globalForDb.__authwordsDb = instance;
