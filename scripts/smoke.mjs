@@ -104,6 +104,7 @@ try {
   await page.goto(`${baseURL}/?view=flip`, { waitUntil: "load" });
   await expect(page.getByRole("heading", { name: "Make the shortcut the lesson." })).toBeVisible();
   await page.getByRole("link", { name: "Overview", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Your authorship, at a glance." })).toBeVisible();
   await page.getByRole("button", { name: "Verify new work" }).click();
   await page.getByRole("button", { name: "Use a sample" }).click();
   await page.getByRole("checkbox").check();

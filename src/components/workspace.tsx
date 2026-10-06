@@ -63,7 +63,7 @@ export default function Workspace() {
 
   // Views live in the query string. pushState updates useSearchParams without a server
   // round trip, so the workspace keeps its loaded state while switching views.
-  function navigate(next: View) { setSidebarOpen(false); setNotifications(false); window.history.pushState(null, "", viewHref(next)); window.scrollTo({ top: 0, behavior: "smooth" }); }
+  function navigate(next: View) { setSidebarOpen(false); setNotifications(false); window.history.pushState(null, "", viewHref(next)); window.scrollTo(0, 0); }
   function navClick(event: MouseEvent<HTMLAnchorElement>, next: View) { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return; event.preventDefault(); navigate(next); }
   function ensureReady() { if (ready) return true; setToast(loadError ? "Reconnect your demo workspace using Retry above." : "Your private demo workspace is getting ready. Please try again in a moment."); return false; }
   function startNew() { if (!ensureReady()) return; if (!data.consent) { navigate("settings"); setToast("Verification is paused. Opt in to try a new demo verification."); return; } setNewWork(true); }
