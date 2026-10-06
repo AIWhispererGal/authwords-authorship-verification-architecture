@@ -61,6 +61,10 @@ With the application running, install Chromium and system dependencies using `np
 
 Use `TEST_BASE_URL` to target another instance. Tests cover session persistence/isolation, origin checking, raw-text rejection, consent enforcement, source preferences, prompt-specific abstention, review requests, credential minting/idempotency, public metadata minimization, independent signature verification, payload tampering, revocation, navigation, table filtering, blueprint search/export, browser-only metric extraction, and mobile layouts. API test workspaces are deleted afterward.
 
+## Deploying to Netlify
+
+`netlify.toml` pins the Next.js runtime. Set `DATABASE_URL` as a secret environment variable on the Netlify project; `NETLIFY_DATABASE_URL` is also accepted. Apply the schema once with `npx drizzle-kit push` against the same database. `/api/health` reports whether a database URL is configured and a redacted driver error if the connection fails. Netlify's free plan allows one recognized Git contributor on a private repository, so keep the repository public or link your Git account in Netlify before pushing commits authored by anyone else.
+
 ## Routes
 
 | Route | Purpose |
