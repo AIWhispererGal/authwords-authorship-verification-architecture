@@ -53,7 +53,9 @@ try {
   console.log("PASS: local hashes, attribution, split integrity, anonymous APIs, deterministic real metrics, baseline recomputation, abstention, and strict ID-only boundaries.");
 
   browser = await chromium.launch({ headless: true, args: ["--no-sandbox"], executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || undefined });
-  const page = await browser.newPage({ viewport: { width: 1440, height: 1050 } });
+  // Set PLAYWRIGHT_IGNORE_HTTPS_ERRORS=1 when a TLS-intercepting proxy sits between this runner and the target.
+  const ignoreHTTPSErrors = process.env.PLAYWRIGHT_IGNORE_HTTPS_ERRORS === "1";
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1050 }, ignoreHTTPSErrors });
   const errors = [], requests = [];
   page.on("pageerror", error => errors.push(error.message));
   page.on("request", req => requests.push(req.url()));
@@ -112,7 +114,7 @@ try {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false);
   console.log("PASS: preloaded result, live API comparison, metadata noninterference, source previews, exports, reset, and shareable state.");
 
-  const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true });
+  const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, ignoreHTTPSErrors });
   await mobile.goto(`${baseURL}/demo?sample=other-human`, { waitUntil: "networkidle" });
   await expect(mobile.getByRole("button", { name: "Other human", exact: true })).toHaveAttribute("aria-pressed", "true");
   assert.equal(await mobile.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false);
