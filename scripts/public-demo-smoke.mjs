@@ -8,18 +8,19 @@ const fixture = JSON.parse(await readFile(new URL("../src/data/public-demo/corpu
 const http = await request.newContext({ baseURL });
 let browser;
 try {
-  assert.equal(fixture.excerpts.length, 7);
-  assert.equal(fixture.baselineIds.length, 3);
-  assert.equal(new Set(fixture.baselineIds).size, 3);
+  assert.equal(fixture.collections.length, 3);
+  assert.equal(fixture.excerpts.length, 21);
+  const austen = fixture.collections.find(item => item.id === "austen");
+  for (const collection of fixture.collections) { assert.equal(collection.baselineIds.length, 3); assert.equal(new Set(collection.baselineIds).size, 3); }
   for (const excerpt of fixture.excerpts) {
     assert.equal(createHash("sha256").update(excerpt.text).digest("hex"), excerpt.sha256, `hash: ${excerpt.id}`);
     assert.equal((excerpt.text.match(/[\p{L}\p{N}]+(?:['’][\p{L}\p{N}]+)*/gu) || []).length, excerpt.wordCount, `words: ${excerpt.id}`);
     if (excerpt.ebook) assert.ok(excerpt.sourceUrl.startsWith("https://www.gutenberg.org/ebooks/"));
     assert.ok(!/PROJECT GUTENBERG|\[Illustration|Transcriber/i.test(excerpt.text));
   }
-  for (const scenario of fixture.scenarios) assert.ok(!fixture.baselineIds.includes(scenario.sampleId), "holdouts cannot leak into the reference set");
+  for (const collection of fixture.collections) for (const scenario of collection.scenarios) assert.ok(!collection.baselineIds.includes(scenario.sampleId), "holdouts cannot leak into the reference set");
   for (const author of fixture.authors) { assert.equal(author.eslStatus, null); assert.equal(author.proficiency, null); }
-  assert.ok(fixture.excerpts.find(item => item.role === "synthetic").generationPrompt);
+  assert.equal(fixture.excerpts.filter(item => item.role === "synthetic" && item.generationPrompt).length, 3);
   const firstPage = await http.get("/demo");
   assert.equal(firstPage.status(), 200);
   assert.equal(firstPage.headers()["set-cookie"], undefined, "public entry must not initialize a workspace");
@@ -28,13 +29,14 @@ try {
   assert.match(corpusResponse.headers()["content-disposition"], /attachment/);
   assert.deepEqual(await corpusResponse.json(), fixture);
   const reports = {};
-  for (const scenario of fixture.scenarios) {
-    const response = await http.get(`/api/demo/compare?scenario=${scenario.id}`);
+  for (const collection of fixture.collections) for (const scenario of collection.scenarios) {
+    const response = await http.get(`/api/demo/compare?collection=${collection.id}&scenario=${scenario.id}`);
     assert.equal(response.status(), 200);
     assert.equal(response.headers()["set-cookie"], undefined);
-    const result = await response.json(); reports[scenario.id] = result;
+    const result = await response.json(); if (collection.id === "austen") reports[scenario.id] = result; reports[`${collection.id}:${scenario.id}`] = result;
+    assert.equal(result.collectionId, collection.id);
     assert.equal(result.probability, null); assert.equal(result.demographicsUsed, false); assert.equal(result.credentialEligible, false);
-    assert.deepEqual(await (await http.get(`/api/demo/compare?scenario=${scenario.id}`)).json(), result, "same fixture yields identical reports");
+    assert.deepEqual(await (await http.get(`/api/demo/compare?collection=${collection.id}&scenario=${scenario.id}`)).json(), result, "same fixture yields identical reports");
     if (scenario.id === "too-short") {
       assert.equal(result.score, null); assert.equal(result.status, "insufficient-evidence"); assert.ok(result.flags.includes("SHORT_SAMPLE"));
     } else {
@@ -43,11 +45,13 @@ try {
       assert.equal(result.score, Math.round(100 / (1 + distance)));
     }
   }
-  const oneReference = await (await http.get(`/api/demo/compare?scenario=same-author&baseline=${fixture.baselineIds[0]}`)).json();
+  assert.deepEqual(await (await http.get(`/api/demo/compare?scenario=same-author`)).json(), reports["same-author"], "the default collection is Austen");
+  const oneReference = await (await http.get(`/api/demo/compare?scenario=same-author&baseline=${austen.baselineIds[0]}`)).json();
   assert.equal(oneReference.score, null); assert.ok(oneReference.flags.includes("SPARSE_BASELINE"));
-  const twoReferences = await (await http.get(`/api/demo/compare?scenario=same-author&baseline=${fixture.baselineIds.slice(0, 2).join(",")}`)).json();
+  const twoReferences = await (await http.get(`/api/demo/compare?scenario=same-author&baseline=${austen.baselineIds.slice(0, 2).join(",")}`)).json();
   assert.notDeepEqual(twoReferences.features, reports["same-author"].features, "selected baseline must actually change the computation");
-  for (const query of ["scenario=made-up", "scenario=same-author&text=private", "baseline=austen-emma", "baseline=austen-sense,austen-sense", "scenario=same-author&scenario=ai-fixture", "demographics=english"]) assert.equal((await http.get(`/api/demo/compare?${query}`)).status(), 400, query);
+  assert.notEqual(reports["mill:same-author"].score, reports["same-author"].score, "collections must not share a cached result");
+  for (const query of ["scenario=made-up", "collection=made-up", "scenario=same-author&text=private", "baseline=austen-emma", "baseline=austen-sense,austen-sense", "collection=mill&baseline=austen-sense", "scenario=same-author&scenario=ai-fixture", "demographics=english"]) assert.equal((await http.get(`/api/demo/compare?${query}`)).status(), 400, query);
   assert.equal((await http.post("/api/demo/compare", { data: { text: "No arbitrary text input is accepted" } })).status(), 405);
   assert.equal((await http.storageState()).cookies.length, 0, "the public API must remain cookieless");
   console.log("PASS: local hashes, attribution, split integrity, anonymous APIs, deterministic real metrics, baseline recomputation, abstention, and strict ID-only boundaries.");
@@ -68,7 +72,7 @@ try {
   assert.ok(requests.every(url => new URL(url).origin === new URL(baseURL).origin), "no third-party runtime calls");
   await page.getByRole("button", { name: "AI fixture", exact: true }).click();
   await expect(page.getByText("PREVIOUS RESULT", { exact: true })).toBeVisible();
-  const calculation = page.waitForResponse(res => res.url().includes("/api/demo/compare?scenario=ai-fixture"));
+  const calculation = page.waitForResponse(res => res.url().includes("/api/demo/compare?") && res.url().includes("scenario=ai-fixture"));
   await page.getByRole("button", { name: "Run comparison", exact: true }).click();
   assert.equal((await calculation).status(), 200);
   await expect(page.locator(".pd-score-ring strong")).toHaveText(String(reports["ai-fixture"].score));
@@ -85,13 +89,13 @@ try {
   await expect(page.locator(".pd-score-ring strong")).toHaveText(String(reports["ai-fixture"].score));
   const seedDownload = page.waitForEvent("download");
   await page.getByRole("link", { name: "Download seed data", exact: true }).click();
-  assert.equal((await seedDownload).suggestedFilename(), "authwords-austen-public-v1.json");
+  assert.equal((await seedDownload).suggestedFilename(), `authwords-${fixture.version}.json`);
   const resultDownload = page.waitForEvent("download");
   await page.getByRole("button", { name: "Export result", exact: true }).click();
-  assert.equal((await resultDownload).suggestedFilename(), "authwords-ai-fixture-comparison.json");
+  assert.equal((await resultDownload).suggestedFilename(), "authwords-austen-ai-fixture-comparison.json");
   await page.getByRole("button", { name: "Meet the source texts" }).click();
   await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(page.getByText("A small collection. A clear paper trail.")).toBeVisible();
+  await expect(page.getByText("Three small collections. A clear paper trail.")).toBeVisible();
   await page.getByRole("button", { name: "Close sources", exact: true }).click();
   await page.getByRole("button", { name: "Read Sense and Sensibility reference", exact: true }).click();
   await expect(page.getByRole("dialog")).toContainText("The family of Dashwood");
@@ -109,10 +113,24 @@ try {
   await expect(page.getByRole("heading", { name: "Insufficient evidence", exact: true })).toBeVisible();
   await page.reload({ waitUntil: "load" });
   await expect(page.getByRole("heading", { name: "Insufficient evidence", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Collection: John Stuart Mill", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "John Stuart Mill", exact: true })).toBeVisible();
+  await expect(page.locator(".pd-score-ring strong")).toHaveText(String(reports["mill:same-author"].score));
+  assert.match(page.url(), /collection=mill/);
+  await page.getByRole("button", { name: "Other human", exact: true }).click();
+  const millCalculation = page.waitForResponse(res => res.url().includes("collection=mill") && res.url().includes("scenario=other-human"));
+  await page.getByRole("button", { name: "Run comparison", exact: true }).click();
+  assert.equal((await millCalculation).status(), 200);
+  await expect(page.locator(".pd-score-ring strong")).toHaveText(String(reports["mill:other-human"].score));
+  await expect(page.getByRole("button", { name: "William James", exact: true })).toBeVisible();
+  await expect(page.locator(".pd-score-tile")).toHaveCount(4);
+  await page.goto(`${baseURL}/demo?collection=darwin&sample=ai-fixture`, { waitUntil: "load" });
+  await expect(page.getByRole("heading", { name: "Charles Darwin", exact: true })).toBeVisible();
+  await expect(page.locator(".pd-score-ring strong")).toHaveText(String(reports["darwin:ai-fixture"].score));
   assert.deepEqual(errors, []);
   assert.equal((await page.context().cookies()).length, 0);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false);
-  console.log("PASS: preloaded result, live API comparison, metadata noninterference, source previews, exports, reset, and shareable state.");
+  console.log("PASS: preloaded result, live API comparison, metadata noninterference, source previews, exports, reset, collection switching, and shareable state.");
 
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, ignoreHTTPSErrors });
   await mobile.goto(`${baseURL}/demo?sample=other-human`, { waitUntil: "load" });
