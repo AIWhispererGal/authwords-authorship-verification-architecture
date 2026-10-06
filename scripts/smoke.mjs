@@ -66,7 +66,9 @@ try {
   console.log("PASS: persistence, isolation, strict data schema, origin checks, consent, signing, tamper resistance, revocation, prompt abstention, review requests.");
 
   browser = await chromium.launch({ headless: true, args: ["--no-sandbox"], executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || undefined });
-  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+  // Set PLAYWRIGHT_IGNORE_HTTPS_ERRORS=1 when a TLS-intercepting proxy sits between this runner and the target.
+  const ignoreHTTPSErrors = process.env.PLAYWRIGHT_IGNORE_HTTPS_ERRORS === "1";
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, ignoreHTTPSErrors });
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
   await page.goto(baseURL, { waitUntil: "networkidle" });
@@ -120,7 +122,7 @@ try {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
   console.log("PASS: navigation, filtering, accessible dialogs, blueprint search/export, flipped-question views, deep links, browser-only extraction, persisted consent, zero desktop overflow.");
 
-  const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true });
+  const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, ignoreHTTPSErrors });
   await mobile.goto(baseURL, { waitUntil: "networkidle" });
   await mobile.getByRole("button", { name: "Open navigation" }).click();
   await mobile.getByRole("link", { name: "Writing profile", exact: true }).click();
