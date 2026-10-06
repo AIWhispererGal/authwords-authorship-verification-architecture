@@ -71,7 +71,7 @@ try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, ignoreHTTPSErrors });
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
-  await page.goto(baseURL, { waitUntil: "networkidle" });
+  await page.goto(baseURL, { waitUntil: "load" });
   await expect(page.getByRole("heading", { name: "Your authorship, at a glance." })).toBeVisible();
   await page.getByRole("link", { name: "My submissions" }).click();
   await page.getByRole("textbox", { name: "Search submissions" }).fill("ethics");
@@ -98,7 +98,7 @@ try {
   await expect(page.locator(".prompt-pane")).toHaveCount(2);
   await page.getByRole("button", { name: "Engineered", exact: true }).click();
   await expect(page.locator(".prompt-pane")).toHaveCount(1);
-  await page.goto(`${baseURL}/?view=flip`, { waitUntil: "networkidle" });
+  await page.goto(`${baseURL}/?view=flip`, { waitUntil: "load" });
   await expect(page.getByRole("heading", { name: "Make the shortcut the lesson." })).toBeVisible();
   await page.getByRole("link", { name: "Overview", exact: true }).click();
   await page.getByRole("button", { name: "Verify new work" }).click();
@@ -116,21 +116,21 @@ try {
   const consentToggle = page.getByRole("switch", { name: "Enable authorship verification" });
   await consentToggle.click();
   await expect(consentToggle).toHaveAttribute("aria-checked", "false");
-  await page.reload({ waitUntil: "networkidle" });
+  await page.reload({ waitUntil: "load" });
   await expect(page.getByRole("switch", { name: "Enable authorship verification" })).toHaveAttribute("aria-checked", "false");
   assert.deepEqual(errors, [], "no browser runtime errors");
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
   console.log("PASS: navigation, filtering, accessible dialogs, blueprint search/export, flipped-question views, deep links, browser-only extraction, persisted consent, zero desktop overflow.");
 
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, ignoreHTTPSErrors });
-  await mobile.goto(baseURL, { waitUntil: "networkidle" });
+  await mobile.goto(baseURL, { waitUntil: "load" });
   await mobile.getByRole("button", { name: "Open navigation" }).click();
   await mobile.getByRole("link", { name: "Writing profile", exact: true }).click();
   await expect(mobile.getByRole("heading", { name: "A voice that’s uniquely yours." })).toBeVisible();
   assert.equal(await mobile.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false);
-  await mobile.goto(baseURL, { waitUntil: "networkidle" });
+  await mobile.goto(baseURL, { waitUntil: "load" });
   assert.equal(await mobile.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false, "dashboard must not expand the mobile visual viewport");
-  await mobile.goto(`${baseURL}/verify/${initial.credentials[0].id}`, { waitUntil: "networkidle" });
+  await mobile.goto(`${baseURL}/verify/${initial.credentials[0].id}`, { waitUntil: "load" });
   await expect(mobile.getByRole("heading", { name: "Verified authorship", exact: true })).toBeVisible();
   assert.ok(!(await mobile.content()).includes("Grade A"), "public page must not disclose a grade");
   assert.equal(await mobile.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false);

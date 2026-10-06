@@ -59,7 +59,7 @@ try {
   const errors = [], requests = [];
   page.on("pageerror", error => errors.push(error.message));
   page.on("request", req => requests.push(req.url()));
-  await page.goto(`${baseURL}/demo`, { waitUntil: "networkidle" });
+  await page.goto(`${baseURL}/demo`, { waitUntil: "load" });
   await expect(page.getByRole("heading", { name: "A familiar author. A better question." })).toBeVisible();
   await expect(page.locator(".pd-score-ring strong")).toHaveText(String(reports["same-author"].score));
   assert.equal(await page.locator('input[type="file"]').count(), 0);
@@ -107,7 +107,7 @@ try {
   await page.getByRole("checkbox", { name: "Include Pride and Prejudice", exact: true }).uncheck();
   await page.getByRole("button", { name: "Run comparison", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Insufficient evidence", exact: true })).toBeVisible();
-  await page.reload({ waitUntil: "networkidle" });
+  await page.reload({ waitUntil: "load" });
   await expect(page.getByRole("heading", { name: "Insufficient evidence", exact: true })).toBeVisible();
   assert.deepEqual(errors, []);
   assert.equal((await page.context().cookies()).length, 0);
@@ -115,7 +115,7 @@ try {
   console.log("PASS: preloaded result, live API comparison, metadata noninterference, source previews, exports, reset, and shareable state.");
 
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, isMobile: true, ignoreHTTPSErrors });
-  await mobile.goto(`${baseURL}/demo?sample=other-human`, { waitUntil: "networkidle" });
+  await mobile.goto(`${baseURL}/demo?sample=other-human`, { waitUntil: "load" });
   await expect(mobile.getByRole("button", { name: "Other human", exact: true })).toHaveAttribute("aria-pressed", "true");
   assert.equal(await mobile.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false);
   await mobile.getByRole("button", { name: "Inspect the signals" }).click();
